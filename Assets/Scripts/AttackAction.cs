@@ -3,10 +3,12 @@ using UnityEngine;
 public class AttackAction : MonoBehaviour
 {
     public Skills deafualtSkill;
-    //Skill Info
+
+    //SKill info for the current skill
     public Rarity rarity;
     public string skillName, skillDescription;
-    //Skill Stats
+
+    //Skill stats for the current skill
     public Vector2 damage;
     public int hitCount, buffDuration;
     public float accuracy, critChance, recoilDamage, damageBuff, damageReductionBuff;
@@ -16,6 +18,7 @@ public class AttackAction : MonoBehaviour
         UpdateSkillInfo(deafualtSkill);
     }
 
+    //Function that updates the current skill slots info with the current skill whenever called
     public void UpdateSkillInfo(Skills skill)
     {
         if (skill != null)

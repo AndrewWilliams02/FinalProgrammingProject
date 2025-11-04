@@ -10,6 +10,7 @@ public class Enemy : MonoBehaviour
 
     void Start()
     {
+        //Sets the values to the healthbar using the enemy's health stats
         healthBar.minValue = 0;
         healthBar.maxValue = health;
         healthBar.value = health;
@@ -18,10 +19,12 @@ public class Enemy : MonoBehaviour
 
     void Update()
     {
+        //Keeps enemy's health updated
         healthBar.value = health;
         healthText.text = $" HP: {health}";
     }
 
+    //Function that applies damage to this enemy when called
     void ApplyDamage(float totalDamage)
     {
         health -= totalDamage;

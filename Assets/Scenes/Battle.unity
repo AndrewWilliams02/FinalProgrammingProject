@@ -1115,7 +1115,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_Color: {r: 0.4481132, g: 1, b: 0.65707904, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -1152,6 +1152,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24c711017ddbdfe4fbb85de0ba77617f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Enemy
+  enemyType: {fileID: 11400000, guid: 49edaaa50898d184ab495bf0b00595cf, type: 2}
   healthBar: {fileID: 238657644}
   healthText: {fileID: 969622003}
 --- !u!1 &519420028
@@ -1692,8 +1693,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AttackAction
   deafualtSkill: {fileID: 0}
+  rarity: 0
   skillName: 
   skillDescription: 
+  damage: {x: 0, y: 0}
+  hitCount: 0
+  buffDuration: 0
+  accuracy: 0
+  critChance: 0
+  recoilDamage: 0
+  damageBuff: 0
+  damageReductionBuff: 0
 --- !u!1 &758248507
 GameObject:
   m_ObjectHideFlags: 0
@@ -1941,8 +1951,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AttackAction
   deafualtSkill: {fileID: 0}
+  rarity: 0
   skillName: 
   skillDescription: 
+  damage: {x: 0, y: 0}
+  hitCount: 0
+  buffDuration: 0
+  accuracy: 0
+  critChance: 0
+  recoilDamage: 0
+  damageBuff: 0
+  damageReductionBuff: 0
 --- !u!1 &859887863
 GameObject:
   m_ObjectHideFlags: 0
@@ -2160,8 +2179,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AttackAction
   deafualtSkill: {fileID: 11400000, guid: fe7e5ab474e33b3469d1eb1b575cd289, type: 2}
+  rarity: 0
   skillName: 
   skillDescription: 
+  damage: {x: 0, y: 0}
+  hitCount: 0
+  buffDuration: 0
+  accuracy: 0
+  critChance: 0
+  recoilDamage: 0
+  damageBuff: 0
+  damageReductionBuff: 0
 --- !u!1 &875741546
 GameObject:
   m_ObjectHideFlags: 0
@@ -2244,8 +2272,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AttackAction
   deafualtSkill: {fileID: 0}
+  rarity: 0
   skillName: 
   skillDescription: 
+  damage: {x: 0, y: 0}
+  hitCount: 0
+  buffDuration: 0
+  accuracy: 0
+  critChance: 0
+  recoilDamage: 0
+  damageBuff: 0
+  damageReductionBuff: 0
 --- !u!1 &904185134
 GameObject:
   m_ObjectHideFlags: 0

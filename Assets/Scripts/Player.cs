@@ -61,4 +61,9 @@ public class Player : MonoBehaviour
             Debug.Log("Attack Missed!");
         }
     }
+
+    void ApplyDamage(float totalDamage)
+    {
+        health -= totalDamage;
+    }
 }

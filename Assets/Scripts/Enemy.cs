@@ -83,7 +83,7 @@ public class Enemy : MonoBehaviour
     {
         if (health <= 0)
         {
-            //Deletes current enemy from lists and destroys it
+            //Deletes current enemy from list and destroys it
             enemyController.SendMessage("RemoveEnemy", gameObject);
             enemyController.SendMessage("CheckEnemies");
             Destroy(gameObject);

@@ -72,6 +72,7 @@ public class Player : MonoBehaviour
         health = Mathf.Round(health * 10) / 10;
     }
 
+    //Updates the players target list
     void UpdateEnemies(List<GameObject> aliveEnemies)
     {
         targets = aliveEnemies;

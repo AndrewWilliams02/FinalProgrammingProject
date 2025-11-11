@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class Enemy : MonoBehaviour
 {
+    //Variables to handle enemy stats
     float health, critChance, attackAccuracy;
     Vector2 attackDamage;
     string enemyName;
@@ -16,7 +17,6 @@ public class Enemy : MonoBehaviour
 
     void Start()
     {
-        //Finds player target
         player = GameObject.Find("Player");
 
         enemyController = GameObject.Find("EnemyController");
@@ -28,11 +28,14 @@ public class Enemy : MonoBehaviour
         healthBar.value = health;
         healthText.text = $" HP: {health}";
 
+        //Destroys records of enemy
         Kill();
     }
 
+    //Function that 
     void AttackPlayer()
     {
+        //Sets the variables needed for damage
         float damage = Random.Range(attackDamage.x, attackDamage.y);
         float multiplier = 1f;
         if (Random.Range(0, 1) <= critChance)
@@ -41,9 +44,10 @@ public class Enemy : MonoBehaviour
         }
         float totalDamage = Mathf.Round((damage * multiplier) * 10f) / 10f;
 
+        //Checks if the player hits the enemy according to the current skills accuracy
         if (Random.Range(0, 1) <= attackAccuracy)
         {
-            player.SendMessage("ApplyDamage", totalDamage);
+            player.SendMessage("ApplyDamage", totalDamage); //Calls the "Apply Damage" function on the player and deals the total attack damage
             Debug.Log($"{enemyName}s dealt {totalDamage} damage to the Player!");
         }
         else
@@ -75,10 +79,12 @@ public class Enemy : MonoBehaviour
         healthText.text = $" HP: {health}";
     }
 
+    //Function to delete the enemy on death
     void Kill()
     {
         if (health <= 0)
         {
+            //Deletes current enemy from lists and destroys it
             enemyController.SendMessage("RemoveEnemy", gameObject);
             player.SendMessage("RemoveEnemy", gameObject);
             enemyController.SendMessage("CheckEnemies");

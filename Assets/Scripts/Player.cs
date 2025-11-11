@@ -13,7 +13,7 @@ public class Player : MonoBehaviour
 
     [SerializeField] GameObject currentTarget; //The current enemy targetted by player
 
-    List<GameObject> targets = new List<GameObject>();
+    List<GameObject> targets = new List<GameObject>(); //Handles all enemies
 
     void Start()
     {
@@ -65,24 +65,28 @@ public class Player : MonoBehaviour
         }
     }
 
+    //Applies damage to the player
     void ApplyDamage(float totalDamage)
     {
         health -= totalDamage;
         health = Mathf.Round(health * 10) / 10;
     }
 
+    //Adds newly spawned enemies to targets list
     void AddEnemy(GameObject enemy)
     {
         targets.Add(enemy);
         SetDefaultTarget();
     }
 
+    //Removes dead enemies from target list
     void RemoveEnemy(GameObject enemy)
     {
         targets.Remove(enemy);
         SetDefaultTarget();
     }
 
+    //Resets current target to first enemy in target list when enemies are spawned or die
     void SetDefaultTarget()
     {
         currentTarget = targets[0];

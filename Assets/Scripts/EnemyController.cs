@@ -5,10 +5,14 @@ public class EnemyController : MonoBehaviour
 {
     [SerializeField] List<EnemyTemplate> enemyType;
     [SerializeField] GameObject enemyPrefab;
+    GameObject player;
     List<GameObject> enemies = new List<GameObject>();
 
     void Start()
     {
+        //Finds player target
+        player = GameObject.Find("Player");
+
         SpawnEnemy();
     }
 
@@ -16,6 +20,23 @@ public class EnemyController : MonoBehaviour
     {
         GameObject newEnemy = Instantiate(enemyPrefab, new Vector3(4, 0, 0), Quaternion.identity);
         enemies.Add(newEnemy);
-        newEnemy.SendMessage("RandomizeEnemy", enemyType[Random.Range(0, enemyType.Count)]);
+        player.SendMessage("AddEnemy", newEnemy);
+        EnemyTemplate newEnemyType = enemyType[Random.Range(0, enemyType.Count)];
+        newEnemy.SendMessage("RandomizeEnemy", newEnemyType);
+        Debug.Log($"Spawned {newEnemyType.name}");
+    }
+
+    void RemoveEnemy(GameObject enemy)
+    {
+        enemies.Remove(enemy);
+        Debug.Log("Removed Enemy");
+    }
+
+    void CheckEnemies()
+    {
+        if (enemies.Count == 0)
+        {
+            SpawnEnemy();
+        }
     }
 }

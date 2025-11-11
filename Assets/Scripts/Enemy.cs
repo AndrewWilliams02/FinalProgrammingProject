@@ -9,7 +9,7 @@ public class Enemy : MonoBehaviour
     Vector2 attackDamage;
     string enemyName;
 
-    GameObject player;
+    GameObject player, enemyController;
 
     [SerializeField] Slider healthBar;
     [SerializeField] TextMeshProUGUI healthText;
@@ -18,6 +18,8 @@ public class Enemy : MonoBehaviour
     {
         //Finds player target
         player = GameObject.Find("Player");
+
+        enemyController = GameObject.Find("EnemyController");
     }
 
     void Update()
@@ -25,6 +27,8 @@ public class Enemy : MonoBehaviour
         //Keeps enemy's health updated
         healthBar.value = health;
         healthText.text = $" HP: {health}";
+
+        Kill();
     }
 
     void AttackPlayer()
@@ -52,6 +56,7 @@ public class Enemy : MonoBehaviour
     void ApplyDamage(float totalDamage)
     {
         health -= totalDamage;
+        health = Mathf.Round(health * 10) / 10;
     }
 
     void RandomizeEnemy(EnemyTemplate enemy)
@@ -68,5 +73,16 @@ public class Enemy : MonoBehaviour
         healthBar.maxValue = health;
         healthBar.value = health;
         healthText.text = $" HP: {health}";
+    }
+
+    void Kill()
+    {
+        if (health <= 0)
+        {
+            enemyController.SendMessage("RemoveEnemy", gameObject);
+            player.SendMessage("RemoveEnemy", gameObject);
+            enemyController.SendMessage("CheckEnemies");
+            Destroy(gameObject);
+        }
     }
 }

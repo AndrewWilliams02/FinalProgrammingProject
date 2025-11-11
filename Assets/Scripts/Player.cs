@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using TMPro;
 using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
@@ -11,6 +12,8 @@ public class Player : MonoBehaviour
     [SerializeField] TextMeshProUGUI healthText;
 
     [SerializeField] GameObject currentTarget; //The current enemy targetted by player
+
+    List<GameObject> targets = new List<GameObject>();
 
     void Start()
     {
@@ -65,5 +68,23 @@ public class Player : MonoBehaviour
     void ApplyDamage(float totalDamage)
     {
         health -= totalDamage;
+        health = Mathf.Round(health * 10) / 10;
+    }
+
+    void AddEnemy(GameObject enemy)
+    {
+        targets.Add(enemy);
+        SetDefaultTarget();
+    }
+
+    void RemoveEnemy(GameObject enemy)
+    {
+        targets.Remove(enemy);
+        SetDefaultTarget();
+    }
+
+    void SetDefaultTarget()
+    {
+        currentTarget = targets[0];
     }
 }

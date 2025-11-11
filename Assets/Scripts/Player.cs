@@ -11,6 +11,8 @@ public class Player : MonoBehaviour
     [SerializeField] Slider healthBar;
     [SerializeField] TextMeshProUGUI healthText;
 
+    [SerializeField] float damageAppliedMult = 1f;
+
     [SerializeField] GameObject currentTarget; //The current enemy targetted by player
 
     public List<GameObject> targets = new List<GameObject>(); //Handles all enemies
@@ -58,18 +60,27 @@ public class Player : MonoBehaviour
         {
             if (recoilDamage > 0) { health -= recoilDamage; } //Deals self damage to the player if the skill has recoil
             currentTarget.SendMessage("ApplyDamage", totalDamage); //Calls the "Apply Damage" function on the current enemy target and deals the total damage of the skill
-            Debug.Log($"Attack dealt {totalDamage} damage!");
-        } else
+        }
+        else
         {
             Debug.Log("Attack Missed!");
         }
     }
 
+    //Reduces damage of next attack by 50%
+    public void Defend()
+    {
+        damageAppliedMult = 0.5f;
+    }
+
     //Applies damage to the player
     void ApplyDamage(float totalDamage)
     {
-        health -= totalDamage;
+        health -= totalDamage * damageAppliedMult;
         health = Mathf.Round(health * 10) / 10;
+        Debug.Log($"Player recieved {totalDamage * damageAppliedMult} damage!");
+
+        damageAppliedMult = 1; //Resets damage applied multiplier
     }
 
     //Updates the players target list

@@ -47,7 +47,6 @@ public class Enemy : MonoBehaviour
         if (Random.Range(0, 1) <= attackAccuracy)
         {
             player.SendMessage("ApplyDamage", totalDamage); //Calls the "Apply Damage" function on the player and deals the total attack damage
-            Debug.Log($"{enemyName}s dealt {totalDamage} damage to the Player!");
         }
         else
         {
@@ -60,6 +59,7 @@ public class Enemy : MonoBehaviour
     {
         health -= totalDamage;
         health = Mathf.Round(health * 10) / 10;
+        Debug.Log($"Player dealt {totalDamage} damage to {enemyName}!");
     }
 
     void RandomizeEnemy(EnemyTemplate enemy)

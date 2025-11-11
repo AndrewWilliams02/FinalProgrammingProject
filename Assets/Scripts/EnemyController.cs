@@ -5,12 +5,13 @@ public class EnemyController : MonoBehaviour
 {
     [SerializeField] List<EnemyTemplate> enemyType;
     [SerializeField] GameObject enemyPrefab;
-    GameObject player;
+    GameObject player, turnManager;
     List<GameObject> enemies = new List<GameObject>(); //Handles all enemies currently alive
 
     void Start()
     {
         player = GameObject.Find("Player");
+        turnManager = GameObject.Find("TurnManager");
         SpawnEnemy();
     }
 
@@ -19,7 +20,10 @@ public class EnemyController : MonoBehaviour
     {
         GameObject newEnemy = Instantiate(enemyPrefab, new Vector3(4, 0, 0), Quaternion.identity); //Spawns new enemy
         enemies.Add(newEnemy); //Adds the enemy to a list of all alive enemies
-        player.SendMessage("AddEnemy", newEnemy); //Adds the enemy to the players targets list
+
+        
+        player.SendMessage("UpdateEnemies", enemies);
+        turnManager.SendMessage("UpdateEnemies", enemies);
 
         //Randomizes enemies type and sets its stats
         EnemyTemplate newEnemyType = enemyType[Random.Range(0, enemyType.Count)];
@@ -31,6 +35,8 @@ public class EnemyController : MonoBehaviour
     void RemoveEnemy(GameObject enemy)
     {
         enemies.Remove(enemy);
+        player.SendMessage("UpdateEnemies", enemies);
+        turnManager.SendMessage("UpdateEnemies", enemies);
         Debug.Log("Removed Enemy");
     }
 

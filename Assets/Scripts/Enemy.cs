@@ -18,7 +18,6 @@ public class Enemy : MonoBehaviour
     void Start()
     {
         player = GameObject.Find("Player");
-
         enemyController = GameObject.Find("EnemyController");
     }
 
@@ -86,7 +85,6 @@ public class Enemy : MonoBehaviour
         {
             //Deletes current enemy from lists and destroys it
             enemyController.SendMessage("RemoveEnemy", gameObject);
-            player.SendMessage("RemoveEnemy", gameObject);
             enemyController.SendMessage("CheckEnemies");
             Destroy(gameObject);
         }

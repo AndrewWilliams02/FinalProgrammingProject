@@ -1,16 +1,40 @@
+using NUnit.Framework;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 public class TurnManager : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    bool isPlayersTurn = true;
+
+    List<GameObject> enemies;
+    [SerializeField] GameObject ui;
+
+    private IEnumerator EnemyTurn()
     {
-        
+        yield return new WaitForSeconds(0.75f);
+
+        for (int i = 0; i < enemies.Count; i++)
+        {
+            enemies[i].SendMessage("AttackPlayer");
+            yield return new WaitForSeconds(0.75f);
+        }
+
+        isPlayersTurn = true;
+        ui.SendMessage("EnablePlayerTurnUI");
     }
 
-    // Update is called once per frame
-    void Update()
+    public void EndPlayersTurn()
     {
-        
+        if (isPlayersTurn)
+        {
+            isPlayersTurn = false;
+            StartCoroutine(EnemyTurn());
+        }
+    }
+    void UpdateEnemies(List<GameObject> aliveEnemies)
+    {
+        enemies = aliveEnemies;
     }
 }

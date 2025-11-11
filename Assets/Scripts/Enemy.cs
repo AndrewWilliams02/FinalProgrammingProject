@@ -5,7 +5,6 @@ using UnityEngine.UI;
 
 public class Enemy : MonoBehaviour
 {
-    [SerializeField] EnemyTemplate enemyType;
     float health, critChance, attackAccuracy;
     Vector2 attackDamage;
     string enemyName;
@@ -17,19 +16,6 @@ public class Enemy : MonoBehaviour
 
     void Start()
     {
-        //Initialize enemy stats from scriptable object
-        health = enemyType.MaxHP;
-        critChance = enemyType.critChance;
-        attackAccuracy = enemyType.attackAccuracy;
-        attackDamage = enemyType.attackDamage;
-        enemyName = enemyType.name;
-
-        //Sets the values to the healthbar using the enemy's health stats
-        healthBar.minValue = 0;
-        healthBar.maxValue = health;
-        healthBar.value = health;
-        healthText.text = $" HP: {health}";
-
         //Finds player target
         player = GameObject.Find("Player");
     }
@@ -41,7 +27,7 @@ public class Enemy : MonoBehaviour
         healthText.text = $" HP: {health}";
     }
 
-    public void AttackPlayer()
+    void AttackPlayer()
     {
         float damage = Random.Range(attackDamage.x, attackDamage.y);
         float multiplier = 1f;
@@ -66,5 +52,21 @@ public class Enemy : MonoBehaviour
     void ApplyDamage(float totalDamage)
     {
         health -= totalDamage;
+    }
+
+    void RandomizeEnemy(EnemyTemplate enemy)
+    {
+        //Initialize enemy stats from scriptable object
+        health = enemy.MaxHP;
+        critChance = enemy.critChance;
+        attackAccuracy = enemy.attackAccuracy;
+        attackDamage = enemy.attackDamage;
+        enemyName = enemy.name;
+
+        //Sets the values to the healthbar using the enemy's health stats
+        healthBar.minValue = 0;
+        healthBar.maxValue = health;
+        healthBar.value = health;
+        healthText.text = $" HP: {health}";
     }
 }

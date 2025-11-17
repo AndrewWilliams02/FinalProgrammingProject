@@ -15,6 +15,6 @@ MonoBehaviour:
   enemyName: Slime
   enemyType: 0
   maxHP: 50
-  attackDamage: {x: 50, y: 2.5}
-  attackAccuracy: 5
-  critChance: 0.9
+  attackDamage: {x: 2.5, y: 5}
+  attackAccuracy: 0.9
+  critChance: 0.1

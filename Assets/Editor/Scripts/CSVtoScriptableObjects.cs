@@ -52,9 +52,9 @@ public class CSVtoScriptableObjects
             enemy.enemyName = splitData[0];
             enemy.enemyType = (EnemyTypes)Enum.Parse(typeof(EnemyTypes), splitData[1]);
             enemy.maxHP = float.Parse(splitData[2]);
-            enemy.attackDamage = new Vector2(float.Parse(splitData[2]), float.Parse(splitData[3]));
-            enemy.attackAccuracy = float.Parse(splitData[4]);
-            enemy.critChance = float.Parse(splitData[5]);
+            enemy.attackDamage = new Vector2(float.Parse(splitData[3]), float.Parse(splitData[4]));
+            enemy.attackAccuracy = float.Parse(splitData[5]);
+            enemy.critChance = float.Parse(splitData[6]);
 
             AssetDatabase.CreateAsset(enemy, $"Assets/Scriptable Objects/Enemies/{enemy.enemyName}.asset");
         }

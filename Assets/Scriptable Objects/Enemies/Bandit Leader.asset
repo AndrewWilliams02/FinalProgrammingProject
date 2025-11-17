@@ -15,6 +15,6 @@ MonoBehaviour:
   enemyName: Bandit Leader
   enemyType: 1
   maxHP: 125
-  attackDamage: {x: 125, y: 10}
-  attackAccuracy: 15
-  critChance: 0.75
+  attackDamage: {x: 10, y: 15}
+  attackAccuracy: 0.75
+  critChance: 0.2

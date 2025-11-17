@@ -15,6 +15,6 @@ MonoBehaviour:
   enemyName: Bandit
   enemyType: 0
   maxHP: 75
-  attackDamage: {x: 75, y: 5}
-  attackAccuracy: 7.5
-  critChance: 0.85
+  attackDamage: {x: 5, y: 7.5}
+  attackAccuracy: 0.85
+  critChance: 0.15

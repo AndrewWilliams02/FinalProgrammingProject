@@ -11,7 +11,7 @@ public class EnemyTemplate : ScriptableObject
     //Inputs for enemies stats
     [Header("Enemy Stats")]
     [Tooltip("Max HP of the enemy")]
-    public float MaxHP;
+    public float maxHP;
     [Tooltip("Minimum(X) and Maximum(Y) base damage for the enemy")]
     public Vector2 attackDamage;
     [Tooltip("Percent chance to hit target")]

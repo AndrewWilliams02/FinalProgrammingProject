@@ -65,7 +65,7 @@ public class Enemy : MonoBehaviour
     void RandomizeEnemy(EnemyTemplate enemy)
     {
         //Initialize enemy stats from scriptable object
-        health = enemy.MaxHP;
+        health = enemy.maxHP;
         critChance = enemy.critChance;
         attackAccuracy = enemy.attackAccuracy;
         attackDamage = enemy.attackDamage;

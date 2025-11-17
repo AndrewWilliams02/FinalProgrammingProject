@@ -1500,7 +1500,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02e68bde1caae7847aadaf8c4f5c19bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AttackAction
-  deafualtSkill: {fileID: 0}
+  deafualtSkill: {fileID: 11400000, guid: 74fa710b6cfde784ea32ce868968a464, type: 2}
   rarity: 0
   skillName: 
   damage: {x: 0, y: 0}
@@ -1978,7 +1978,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02e68bde1caae7847aadaf8c4f5c19bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AttackAction
-  deafualtSkill: {fileID: 11400000, guid: fe7e5ab474e33b3469d1eb1b575cd289, type: 2}
+  deafualtSkill: {fileID: 11400000, guid: c0e6d660aaa47354dbe527e8835764c8, type: 2}
   rarity: 0
   skillName: 
   damage: {x: 0, y: 0}
@@ -2067,7 +2067,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02e68bde1caae7847aadaf8c4f5c19bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AttackAction
-  deafualtSkill: {fileID: 0}
+  deafualtSkill: {fileID: 11400000, guid: 5471d44e2dea1e44f83d6ad452d5043e, type: 2}
   rarity: 0
   skillName: 
   damage: {x: 0, y: 0}
@@ -3299,7 +3299,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyController
   enemyType:
-  - {fileID: 11400000, guid: 49edaaa50898d184ab495bf0b00595cf, type: 2}
+  - {fileID: 11400000, guid: 7c7f585bade41b2409820b30ff4de02e, type: 2}
+  - {fileID: 11400000, guid: be21a6f90db437b49a100c2cc137ddd4, type: 2}
+  - {fileID: 11400000, guid: 206c9868cb9a4af41ae7d890e1d51779, type: 2}
   enemyPrefab: {fileID: 6598261194406873116, guid: 62e9b5927b8a8f24ca6e6d0e8cf722e0, type: 3}
 --- !u!1 &2075513779
 GameObject:

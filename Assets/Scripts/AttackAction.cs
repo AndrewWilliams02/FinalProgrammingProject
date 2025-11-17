@@ -6,12 +6,12 @@ public class AttackAction : MonoBehaviour
 
     //SKill info for the current skill
     public Rarity rarity;
-    public string skillName, skillDescription;
+    public string skillName;
 
     //Skill stats for the current skill
     public Vector2 damage;
-    public int hitCount, buffDuration;
-    public float accuracy, critChance, recoilDamage, damageBuff, damageReductionBuff;
+    public int hitCount;
+    public float accuracy, critChance, recoilDamage;
 
     private void Awake()
     {
@@ -25,15 +25,11 @@ public class AttackAction : MonoBehaviour
         {
             rarity = skill.rarity;
             skillName = skill.skillName;
-            skillDescription = skill.skillDescription;
             hitCount = skill.hitCount;
-            buffDuration = skill.buffDuration;
             damage = skill.damage;
             accuracy = skill.accuracy;
             critChance = skill.critChance;
             recoilDamage = skill.recoilDamage;
-            damageBuff = skill.damageBuff;
-            damageReductionBuff = skill.damageReductionBuff;
         }
     }
 }

@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cfed4cc79084ebb45955c61cb08712e3, type: 3}
-  m_Name: Slime
+  m_Name: Test Mob
   m_EditorClassIdentifier: Assembly-CSharp::EnemyTemplate
-  enemyName: Slime
+  enemyName: Test Mob
   enemyType: 0
   MaxHP: 50
-  attackDamage: {x: 2.5, y: 5}
-  attackAccuracy: 0.9
-  critChance: 0.1
+  attackDamage: {x: 5, y: 5}
+  attackAccuracy: 1
+  critChance: 0

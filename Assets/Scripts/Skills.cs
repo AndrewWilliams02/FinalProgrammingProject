@@ -7,7 +7,6 @@ public class Skills : ScriptableObject //Scriptable object for housing data of u
     [Header("Skill Info")]
     public string skillName;
     public Rarity rarity;
-    public string skillDescription;
 
     //Inputs for skill's attack stats
     [Header("Attack Stats")]
@@ -21,13 +20,4 @@ public class Skills : ScriptableObject //Scriptable object for housing data of u
     public float critChance;
     [Tooltip("Damage dealt to user on hit")]
     public float recoilDamage;
-
-    //Inputs for skill's buff stats
-    [Header("Buff Stats")]
-    [Tooltip("Amount of turns the buff lasts")]
-    public int buffDuration;
-    [Tooltip("Multiplier to increase damage dealt")]
-    public float damageBuff;
-    [Tooltip("Multiplier to reduce damage taken")]
-    public float damageReductionBuff;
 }

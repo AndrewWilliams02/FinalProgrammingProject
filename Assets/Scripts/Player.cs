@@ -47,8 +47,8 @@ public class Player : MonoBehaviour
 
         //Sets the variables needed for damage and buffs from the current skill
         float damage = Mathf.Round(Random.Range(skill.damage.x, skill.damage.y));
-        int hitCount = skill.hitCount, buffDuration = skill.buffDuration;
-        float accuracy = skill.accuracy, critChance = skill.critChance, recoilDamage = skill.recoilDamage, damageBuff = skill.damageBuff, damageReductionBuff = skill.damageReductionBuff;
+        int hitCount = skill.hitCount;
+        float accuracy = skill.accuracy, critChance = skill.critChance, recoilDamage = skill.recoilDamage;
         float multiplier = 1f;
         if (Random.Range(0, 1) <= critChance) //Checks if the player's attack crits and adjusts the modifier if so
         {

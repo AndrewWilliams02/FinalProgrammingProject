@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class AttackAction : MonoBehaviour
 {
-    public Skills deafualtSkill;
+    public Skills skill;
 
     //SKill info for the current skill
     public Rarity rarity;
@@ -15,7 +15,7 @@ public class AttackAction : MonoBehaviour
 
     private void Awake()
     {
-        UpdateSkillInfo(deafualtSkill);
+        UpdateSkillInfo(skill);
     }
 
     //Function that updates the current skill slots info with the current skill whenever called

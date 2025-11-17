@@ -14,6 +14,9 @@ public class UpdateInfo : MonoBehaviour
 
     public void UpdateSkillInfo()
     {
-        text.text = skill.GetComponent<AttackAction>().skillName;
+        if (skill != null)
+        {
+            text.text = skill.GetComponent<AttackAction>().skillName;
+        }
     }
 }

@@ -45,25 +45,31 @@ public class Player : MonoBehaviour
         //Refrence the current skill in the skill slot
         AttackAction skill = action.GetComponent<AttackAction>();
 
-        //Sets the variables needed for damage and buffs from the current skill
-        float damage = Mathf.Round(Random.Range(skill.damage.x, skill.damage.y));
-        int hitCount = skill.hitCount;
-        float accuracy = skill.accuracy, critChance = skill.critChance, recoilDamage = skill.recoilDamage;
-        float multiplier = 1f;
-        if (Random.Range(0, 1) <= critChance) //Checks if the player's attack crits and adjusts the modifier if so
-        {
-            multiplier = 1.25f;
-        }
-        float totalDamage = Mathf.Round((damage * hitCount * multiplier) * 10f) / 10f; //Calculates the players total damage rounded to the nearest tenth
+        if (skill != null) {
+            //Sets the variables needed for damage and buffs from the current skill
+            float damage = Mathf.Round(Random.Range(skill.damage.x, skill.damage.y));
+            int hitCount = skill.hitCount;
+            float accuracy = skill.accuracy, critChance = skill.critChance, recoilDamage = skill.recoilDamage;
+            float multiplier = 1f;
+            if (Random.Range(0, 1) <= critChance) //Checks if the player's attack crits and adjusts the modifier if so
+            {
+                multiplier = 1.25f;
+            }
+            float totalDamage = Mathf.Round((damage * hitCount * multiplier) * 10f) / 10f; //Calculates the players total damage rounded to the nearest tenth
 
-        if (Random.Range(0, 1) <= accuracy) //Checks if the player hits the enemy according to the current skills accuracy
-        {
-            if (recoilDamage > 0) { health -= recoilDamage; } //Deals self damage to the player if the skill has recoil
-            currentTarget.SendMessage("ApplyDamage", totalDamage); //Calls the "Apply Damage" function on the current enemy target and deals the total damage of the skill
+            if (Random.Range(0, 1) <= accuracy) //Checks if the player hits the enemy according to the current skills accuracy
+            {
+                if (recoilDamage > 0) { health -= recoilDamage; } //Deals self damage to the player if the skill has recoil
+                currentTarget.SendMessage("ApplyDamage", totalDamage); //Calls the "Apply Damage" function on the current enemy target and deals the total damage of the skill
+            }
+            else
+            {
+                Debug.Log("Attack Missed!");
+            }
         }
         else
         {
-            Debug.Log("Attack Missed!");
+            Debug.Log("No Skill Equipped");
         }
     }
 

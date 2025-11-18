@@ -6,8 +6,7 @@ using UnityEngine;
 
 public class CSVtoScriptableObjects
 {
-    private static string enemyCSVPath = "/Editor/CSVs/Enemies.csv", skillCSVPath = "/Editor/CSVs/Skills.csv", itemCSVPath;
-    int currentLine = 0;
+    private static string enemyCSVPath = "/Editor/CSVs/Enemies.csv", skillCSVPath = "/Editor/CSVs/Skills.csv", itemCSVPath = "/Editor/CSVs/Items.csv";
 
     [MenuItem("Generation/Generate Skills")] //Ceates a new selection under the "Generation" tab in the unity editor to generate skills
     public static void GenerateSkills()
@@ -65,6 +64,27 @@ public class CSVtoScriptableObjects
     [MenuItem("Generation/Generate Items")]
     public static void GenerateItems()
     {
+        string[] allLines = File.ReadAllLines(Application.dataPath + itemCSVPath);
 
+        for (int i = 1; i < allLines.Length; i++)
+        {
+            string[] splitData = allLines[i].Split(',');
+
+            Item item = ScriptableObject.CreateInstance<Item>();
+            item.itemName = splitData[0];
+            item.rarity = (Rarity)Enum.Parse(typeof(Rarity), splitData[1]);
+            item.itemType = (ItemType)Enum.Parse(typeof(ItemType), splitData[2]);
+            item.flatHP = float.Parse(splitData[3]);
+            item.percentHP = float.Parse(splitData[4]);
+            item.flatDamage = float.Parse(splitData[5]);
+            item.percentDamage = float.Parse(splitData[6]);
+            item.flatDamageRed = float.Parse(splitData[7]);
+            item.percentDamageRed = float.Parse( splitData[8]);
+            item.regen = float.Parse(splitData[9]);
+
+            AssetDatabase.CreateAsset(item, $"Assets/Scriptable Objects/Items/{item.itemName}.asset");
+        }
+
+        AssetDatabase.SaveAssets();
     }
 }

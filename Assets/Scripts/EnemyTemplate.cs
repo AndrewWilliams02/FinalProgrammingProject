@@ -4,7 +4,7 @@ using UnityEngine;
 public class EnemyTemplate : ScriptableObject
 {
     //Inputs for enemy info
-    [Header("Skill Info")]
+    [Header("Enemy Info")]
     public string enemyName;
     public EnemyTypes enemyType;
 

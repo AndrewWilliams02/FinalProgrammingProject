@@ -1,0 +1,4 @@
+Name,Rarity,Type,FlatHealth,HealthPercent,FlatDamage,DamagePercent,FlatDamageReduction,DamageReductionPercent,Regeneration
+Basic Sword,Common,Weapon,0,0,4,0,0,0,0
+Enchanted Armor,Rare,Armor,10,0.25,0,10,0,0.25,5
+Broken Ring,Common,Ring,-5,0,-2.5,0,0,0,2.5

@@ -7,7 +7,13 @@ using UnityEngine.UI;
 public class Player : MonoBehaviour
 {
     float health; //Players current health
-    float maxHealth = 100;
+    public float maxHealth = 100;
+    public float damageBonus = 0;
+    public float damageReduction = 0;
+    public float regeneration = 0;
+    public float critChanceBonus = 0;
+    public float critMultiplierBonus = 0;
+
     [SerializeField] Slider healthBar;
     [SerializeField] TextMeshProUGUI healthText;
 
@@ -51,12 +57,12 @@ public class Player : MonoBehaviour
             for (int i = 0; i < hitCount; i++)
             {
                 //Sets the variables needed for damage and buffs from the current skill
-                float damage = Mathf.Round(Random.Range(skill.damage.x, skill.damage.y));
+                float damage = Mathf.Round(Random.Range(skill.damage.x + damageBonus/2, skill.damage.y + damageBonus));
                 float accuracy = skill.accuracy, critChance = skill.critChance, recoilDamage = skill.recoilDamage;
                 float multiplier = 1f;
-                if (Random.Range(0, 1) <= critChance) //Checks if the player's attack crits and adjusts the modifier if so
+                if (Random.Range(0, 1) <= critChance + critChanceBonus) //Checks if the player's attack crits and adjusts the modifier if so
                 {
-                    multiplier = 1.25f;
+                    multiplier = 1.25f + critMultiplierBonus;
                 }
                 float totalDamage = Mathf.Round((damage * multiplier) * 10f) / 10f; //Calculates the players total damage rounded to the nearest tenth
 
@@ -86,7 +92,7 @@ public class Player : MonoBehaviour
     //Applies damage to the player
     void ApplyDamage(float totalDamage)
     {
-        health -= totalDamage * damageAppliedMult;
+        health -= totalDamage * damageAppliedMult * (1 - damageReduction);
         health = Mathf.Round(health * 10) / 10;
         Debug.Log($"Player recieved {totalDamage * damageAppliedMult} damage!");
 
@@ -98,5 +104,19 @@ public class Player : MonoBehaviour
     {
         targets = aliveEnemies;
         currentTarget = targets[0];
+    }
+
+    void RegenHealth()
+    {
+        health += regeneration;
+        ResetHealth();
+    }
+
+    void ResetHealth()
+    {
+        if (health > maxHealth)
+        {
+            health = maxHealth;
+        }
     }
 }

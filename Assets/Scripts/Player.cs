@@ -106,10 +106,9 @@ public class Player : MonoBehaviour
         currentTarget = targets[0];
     }
 
-    void RegenHealth()
+    public void RegenHealth()
     {
-        health += regeneration;
-        ResetHealth();
+        Heal(regeneration);
     }
 
     void ResetHealth()
@@ -118,5 +117,11 @@ public class Player : MonoBehaviour
         {
             health = maxHealth;
         }
+    }
+
+    public void Heal(float amount)
+    {
+        health += amount;
+        ResetHealth();
     }
 }

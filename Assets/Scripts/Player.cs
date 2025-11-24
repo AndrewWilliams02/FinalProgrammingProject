@@ -6,6 +6,8 @@ using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
+    bool inBattle = true;
+
     float health; //Players current health
     public float maxHealth = 100;
     public float damageBonus = 0;
@@ -35,9 +37,12 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        //Keeps players health updated
-        healthBar.value = health;
-        healthText.text = $" HP: {health}";
+        if (inBattle)
+        {
+            //Keeps players health updated
+            healthBar.value = health;
+            healthText.text = $" HP: {health}";
+        }
     }
 
     void UpdateHealthBar()
@@ -48,45 +53,52 @@ public class Player : MonoBehaviour
     //Function that uses the current skill in one of the players 4 skill slots
     public void UseSkill(GameObject action)
     {
-        //Refrence the current skill in the skill slot
-        AttackAction skill = action.GetComponent<AttackAction>();
+        if (inBattle)
+        {
+            //Refrence the current skill in the skill slot
+            AttackAction skill = action.GetComponent<AttackAction>();
 
-        if (skill != null) {
-            int hitCount = skill.hitCount;
-
-            for (int i = 0; i < hitCount; i++)
+            if (skill != null)
             {
-                //Sets the variables needed for damage and buffs from the current skill
-                float damage = Mathf.Round(Random.Range(skill.damage.x + damageBonus/2, skill.damage.y + damageBonus));
-                float accuracy = skill.accuracy, critChance = skill.critChance, recoilDamage = skill.recoilDamage;
-                float multiplier = 1f;
-                if (Random.Range(0, 1) <= critChance + critChanceBonus) //Checks if the player's attack crits and adjusts the modifier if so
-                {
-                    multiplier = 1.25f + critMultiplierBonus;
-                }
-                float totalDamage = Mathf.Round((damage * multiplier) * 10f) / 10f; //Calculates the players total damage rounded to the nearest tenth
+                int hitCount = skill.hitCount;
 
-                if (Random.Range(0, 1) <= accuracy) //Checks if the player hits the enemy according to the current skills accuracy
+                for (int i = 0; i < hitCount; i++)
                 {
-                    if (recoilDamage > 0) { health -= recoilDamage; } //Deals self damage to the player if the skill has recoil
-                    currentTarget.SendMessage("ApplyDamage", totalDamage); //Calls the "Apply Damage" function on the current enemy target and deals the total damage of the skill
-                }
-                else
-                {
-                    Debug.Log("Attack Missed!");
+                    //Sets the variables needed for damage and buffs from the current skill
+                    float damage = Mathf.Round(Random.Range(skill.damage.x + damageBonus / 2, skill.damage.y + damageBonus));
+                    float accuracy = skill.accuracy, critChance = skill.critChance, recoilDamage = skill.recoilDamage;
+                    float multiplier = 1f;
+                    if (Random.Range(0, 1) <= critChance + critChanceBonus) //Checks if the player's attack crits and adjusts the modifier if so
+                    {
+                        multiplier = 1.25f + critMultiplierBonus;
+                    }
+                    float totalDamage = Mathf.Round((damage * multiplier) * 10f) / 10f; //Calculates the players total damage rounded to the nearest tenth
+
+                    if (Random.Range(0, 1) <= accuracy) //Checks if the player hits the enemy according to the current skills accuracy
+                    {
+                        if (recoilDamage > 0) { health -= recoilDamage; } //Deals self damage to the player if the skill has recoil
+                        currentTarget.SendMessage("ApplyDamage", totalDamage); //Calls the "Apply Damage" function on the current enemy target and deals the total damage of the skill
+                    }
+                    else
+                    {
+                        Debug.Log("Attack Missed!");
+                    }
                 }
             }
-        }
-        else
-        {
-            Debug.Log("No Skill Equipped");
+            else
+            {
+                Debug.Log("No Skill Equipped");
+            }
         }
     }
 
     //Reduces damage of next attack by 50%
     public void Defend()
     {
-        damageAppliedMult = 0.5f;
+        if (inBattle)
+        {
+            damageAppliedMult = 0.5f;
+        }
     }
 
     //Applies damage to the player
@@ -108,7 +120,10 @@ public class Player : MonoBehaviour
 
     public void RegenHealth()
     {
-        Heal(regeneration);
+        if (inBattle)
+        {
+            Heal(regeneration);
+            }
     }
 
     void ResetHealth()
@@ -123,5 +138,10 @@ public class Player : MonoBehaviour
     {
         health += amount;
         ResetHealth();
+    }
+
+    public void Resting(bool state)
+    {
+        inBattle = state;
     }
 }

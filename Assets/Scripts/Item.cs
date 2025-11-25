@@ -19,10 +19,14 @@ public class Item : ScriptableObject
     public float flatDamage;
     [Tooltip("Percent Damage Increase")]
     public float percentDamage;
-    [Tooltip("Flat Damage Reduction")]
+    [Tooltip("Flat Damage Reduction Increase")]
     public float flatDamageRed;
-    [Tooltip("Percent Damage Reduction")]
+    [Tooltip("Percent Damage Reduction Increase")]
     public float percentDamageRed;
+    [Tooltip("Crit Chance Increase")]
+    public float critChance;
+    [Tooltip("Crit Multiplier Increase")]
+    public float critMultiplier;
     [Tooltip("Regeneration Rate")]
     public float regen;
 }

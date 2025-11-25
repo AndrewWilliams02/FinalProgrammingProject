@@ -80,7 +80,9 @@ public class CSVtoScriptableObjects
             item.percentDamage = float.Parse(splitData[6]);
             item.flatDamageRed = float.Parse(splitData[7]);
             item.percentDamageRed = float.Parse( splitData[8]);
-            item.regen = float.Parse(splitData[9]);
+            item.critChance = float.Parse(splitData[9]);
+            item.critMultiplier = float.Parse(splitData[10]);
+            item.regen = float.Parse(splitData[11]);
 
             AssetDatabase.CreateAsset(item, $"Assets/Scriptable Objects/Items/{item.itemName}.asset");
         }

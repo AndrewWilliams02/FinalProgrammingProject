@@ -9,13 +9,20 @@ public class Player : MonoBehaviour
     [SerializeField] GameObject stateManager;
     [SerializeField] GameObject playerUI;
 
+    public Item weaponSlot, armorSlot, ringSlot;
+
     float health; //Players current health
-    public float maxHealth = 100;
-    public float damageBonus = 0;
-    public float damageReduction = 0;
-    public float regeneration = 0;
-    public float critChanceBonus = 0;
-    public float critMultiplierBonus = 0;
+    float maxHealth = 100;
+    float damage = 0;
+    float damageReduction = 0;
+    float regeneration = 0;
+    float critChance = 0;
+    float critMultiplier = 0;
+
+    float flatHP, percentHp;
+    float flatDamage, percentDamage;
+    float flatDamageRed, percentDamageRed;
+    float critChanceBonus, critMultiplierBonus;
 
     [SerializeField] Slider healthBar;
     [SerializeField] TextMeshProUGUI healthText;
@@ -61,16 +68,16 @@ public class Player : MonoBehaviour
                 for (int i = 0; i < hitCount; i++)
                 {
                     //Sets the variables needed for damage and buffs from the current skill
-                    float damage = Mathf.Round(Random.Range(skill.damage.x + damageBonus / 2, skill.damage.y + damageBonus));
-                    float accuracy = skill.accuracy, critChance = skill.critChance, recoilDamage = skill.recoilDamage;
+                    float damageTemp = Mathf.Round(Random.Range(skill.damage.x + damage / 2, skill.damage.y + damage));
+                    float accuracyTemp = skill.accuracy, critChanceTemp = skill.critChance, recoilDamage = skill.recoilDamage;
                     float multiplier = 1f;
-                    if (Random.Range(0, 1) <= critChance + critChanceBonus) //Checks if the player's attack crits and adjusts the modifier if so
+                    if (Random.Range(0, 1) <= critChanceTemp + critChance) //Checks if the player's attack crits and adjusts the modifier if so
                     {
-                        multiplier = 1.25f + critMultiplierBonus;
+                        multiplier = 1.25f + critMultiplier;
                     }
-                    float totalDamage = Mathf.Round((damage * multiplier) * 10f) / 10f; //Calculates the players total damage rounded to the nearest tenth
+                    float totalDamage = Mathf.Round((damageTemp * multiplier) * 10f) / 10f; //Calculates the players total damage rounded to the nearest tenth
 
-                    if (Random.Range(0, 1) <= accuracy) //Checks if the player hits the enemy according to the current skills accuracy
+                    if (Random.Range(0, 1) <= accuracyTemp) //Checks if the player hits the enemy according to the current skills accuracy
                     {
                         if (recoilDamage > 0) { health -= recoilDamage; } //Deals self damage to the player if the skill has recoil
                         currentTarget.SendMessage("ApplyDamage", totalDamage); //Calls the "Apply Damage" function on the current enemy target and deals the total damage of the skill
@@ -143,13 +150,122 @@ public class Player : MonoBehaviour
 
     public void ResetPlayer()
     {
-        maxHealth = 100;
-        health = maxHealth;
-        damageBonus = 0;
-        damageReduction = 0;
-        regeneration = 0;
-        critChanceBonus = 0;
-        critMultiplierBonus = 0;
+        weaponSlot = null;
+        armorSlot = null;
+        ringSlot = null;
+        UpdateBonuses();
+        UpdateStats();
+    }
+
+    public void EquipArmor(Item item)
+    {
+        if (item.itemType == ItemType.Weapon)
+        {
+            weaponSlot = item;
+            UpdateBonuses();
+            UpdateStats();
+        }
+        else if (item.itemType == ItemType.Armor)
+        {
+            armorSlot = item;
+            UpdateBonuses();
+            UpdateStats();
+        }
+        else if (item.itemType == ItemType.Ring)
+        {
+            ringSlot = item;
+            UpdateBonuses();
+            UpdateStats();
+        }
+    }
+
+    void UpdateBonuses()
+    {
+        if (weaponSlot != null)
+        {
+            flatHP = weaponSlot.flatHP;
+            percentHp = weaponSlot.percentHP;
+            flatDamage = weaponSlot.flatDamage;
+            percentDamage = weaponSlot.percentDamage;
+            flatDamageRed = weaponSlot.flatDamageRed;
+            percentDamageRed = weaponSlot.percentDamageRed;
+            critChanceBonus = weaponSlot.critChance;
+            critMultiplierBonus = weaponSlot.critMultiplier;
+            regeneration = weaponSlot.regen;
+        }
+        else
+        {
+            flatHP = 0;
+            percentHp = 0;
+            flatDamage = 0;
+            percentDamage = 0;
+            flatDamageRed = 0;
+            percentDamageRed = 0;
+            critChanceBonus = 0;
+            critMultiplierBonus = 0;
+            regeneration = 0;
+        }
+
+        if (armorSlot != null)
+        {
+            flatHP += armorSlot.flatHP;
+            percentHp += armorSlot.percentHP;
+            flatDamage += armorSlot.flatDamage;
+            percentDamage += armorSlot.percentDamage;
+            flatDamageRed += armorSlot.flatDamageRed;
+            percentDamageRed += armorSlot.percentDamageRed;
+            critChanceBonus += armorSlot.critChance;
+            critMultiplierBonus += armorSlot.critMultiplier;
+            regeneration += armorSlot.regen;
+        }
+        else
+        {
+            flatHP += 0;
+            percentHp += 0;
+            flatDamage += 0;
+            percentDamage += 0;
+            flatDamageRed += 0;
+            percentDamageRed += 0;
+            critChanceBonus += 0;
+            critMultiplierBonus += 0;
+            regeneration += 0;
+        }
+
+        if (ringSlot != null)
+        {
+            flatHP += ringSlot.flatHP;
+            percentHp += ringSlot.percentHP;
+            flatDamage += ringSlot.flatDamage;
+            percentDamage += ringSlot.percentDamage;
+            flatDamageRed += ringSlot.flatDamageRed;
+            percentDamageRed += ringSlot.percentDamageRed;
+            critChanceBonus += ringSlot.critChance;
+            critMultiplierBonus += ringSlot.critMultiplier;
+            regeneration = ringSlot.regen;
+        }
+        else
+        {
+            flatHP += 0;
+            percentHp += 0;
+            flatDamage += 0;
+            percentDamage += 0;
+            flatDamageRed += 0;
+            percentDamageRed += 0;
+            critChanceBonus += 0;
+            critMultiplierBonus += 0;
+            regeneration += 0;
+        }
+    }
+
+    void UpdateStats()
+    {
+        maxHealth = (100 + flatHP) * (1 + percentHp);
+        damage = (0 + flatDamage) * (1 + percentDamage);
+        damageReduction = (0 + flatDamageRed) * (1 + percentDamageRed);
+        regeneration = 0 + regeneration;
+        critChance = 0 + critChanceBonus;
+        critMultiplier = 0 + critMultiplierBonus;
         damageAppliedMult = 1f;
+        ResetHealth();
     }
 }

@@ -21,4 +21,6 @@ MonoBehaviour:
   percentDamage: 0
   flatDamageRed: 0
   percentDamageRed: 0
+  critChance: 0
+  critMultiplier: 0
   regen: 0

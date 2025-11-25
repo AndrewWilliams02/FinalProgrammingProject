@@ -106,11 +106,12 @@ public class Player : MonoBehaviour
         {
             for (int i = 0; i < targets.Count; i++) 
             {
-                targets[i].SendMessage("Kill");
+                targets[i].SendMessage("ApplyDammage", 1000000f);
             }
-            stateManager.SendMessage("GameOver");
+            ResetPlayer();
             playerUI.SetActive(false);
             transform.position = new Vector3(4, 100, 0);
+            stateManager.SendMessage("GameOver");
         }
     }
 
@@ -138,5 +139,17 @@ public class Player : MonoBehaviour
     {
         health += amount;
         ResetHealth();
+    }
+
+    public void ResetPlayer()
+    {
+        maxHealth = 100;
+        health = maxHealth;
+        damageBonus = 0;
+        damageReduction = 0;
+        regeneration = 0;
+        critChanceBonus = 0;
+        critMultiplierBonus = 0;
+        damageAppliedMult = 1f;
     }
 }

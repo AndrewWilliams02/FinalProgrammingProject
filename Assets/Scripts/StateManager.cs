@@ -4,6 +4,11 @@ public class StateManager : MonoBehaviour
 {
     public GameObject player, battle, rest;
 
+    private void Start()
+    {
+        StartBattle();
+    }
+
     public void StartResting()
     {
         player.SendMessage("Resting", true);

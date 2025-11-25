@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class StateManager : MonoBehaviour
 {
-    public GameObject player, battle, rest;
+    public GameObject player, battle, rest, gameOver;
 
     private void Start()
     {
@@ -11,19 +11,23 @@ public class StateManager : MonoBehaviour
 
     public void StartResting()
     {
-        player.SendMessage("Resting", true);
-        SetState(false, true);
+        SetState(false, true, false);
     }
 
     public void StartBattle()
     {
-        player.SendMessage("Resting", false);
-        SetState(true, false);
+        SetState(true, false, false);
     }
 
-    void SetState(bool state1, bool state2)
+    public void GameOver()
+    {
+        SetState(false, false, true);
+    }
+
+    void SetState(bool state1, bool state2, bool state3)
     {
         battle.SetActive(state1);
         rest.SetActive(state2);
+        gameOver.SetActive(state3);
     }
 }

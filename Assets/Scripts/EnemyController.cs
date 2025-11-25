@@ -1,5 +1,6 @@
-using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.VFX;
 
 public class EnemyController : MonoBehaviour
 {
@@ -8,24 +9,35 @@ public class EnemyController : MonoBehaviour
     GameObject player, turnManager;
     List<GameObject> enemies = new List<GameObject>(); //Handles all enemies currently alive
 
+    [SerializeField] GameObject[] spawners;
+
     void Start()
     {
         player = GameObject.Find("Player");
         turnManager = GameObject.Find("TurnManager");
-        SpawnEnemy();
+
+        int enemyNum = Random.Range(1, 4);
+        SpawnEnemy(enemyNum);
     }
 
     //Function that spawns new enemies
-    void SpawnEnemy()
+    void SpawnEnemy(int numOfEnemies)
     {
-        GameObject newEnemy = Instantiate(enemyPrefab, new Vector3(4, 0, 0), Quaternion.identity); //Spawns new enemy
-        enemies.Add(newEnemy); //Adds the enemy to a list of all alive enemies
-        UpdateLists();
-
-        //Randomizes enemies type and sets its stats
-        EnemyTemplate newEnemyType = enemyType[Random.Range(0, enemyType.Count)];
-        newEnemy.SendMessage("RandomizeEnemy", newEnemyType);
-        Debug.Log($"Spawned {newEnemyType.name}");
+        switch (numOfEnemies)
+        {
+            case 1:
+                CreateEnemy(0);
+                return;
+            case 2:
+                CreateEnemy(0);
+                CreateEnemy(1);
+                return;
+            case 3:
+                CreateEnemy(0);
+                CreateEnemy(1);
+                CreateEnemy(2);
+                return;
+        }
     }
 
     //Function that removes enemy from the list of alive enemies
@@ -41,7 +53,8 @@ public class EnemyController : MonoBehaviour
     {
         if (enemies.Count == 0)
         {
-            SpawnEnemy();
+            int enemyNum = Random.Range(0, 4);
+            SpawnEnemy(enemyNum);
         }
     }
 
@@ -50,5 +63,15 @@ public class EnemyController : MonoBehaviour
     {
         player.SendMessage("UpdateEnemies", enemies);
         turnManager.SendMessage("UpdateEnemies", enemies);
+    }
+
+    void CreateEnemy(int index)
+    {
+        GameObject newEnemy = Instantiate(enemyPrefab, spawners[index].transform.position, Quaternion.identity);
+        enemies.Add(newEnemy);
+        UpdateLists();
+        EnemyTemplate newEnemyType = enemyType[Random.Range(0, enemyType.Count)];
+        newEnemy.SendMessage("RandomizeEnemy", newEnemyType);
+        Debug.Log($"Spawned {newEnemyType.name}");
     }
 }

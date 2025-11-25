@@ -85,7 +85,6 @@ public class Enemy : MonoBehaviour
         {
             //Deletes current enemy from list and destroys it
             enemyController.SendMessage("RemoveEnemy", gameObject);
-            enemyController.SendMessage("CheckEnemies");
             Destroy(gameObject);
         }
     }

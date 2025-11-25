@@ -6,7 +6,8 @@ using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
-    bool inBattle = true;
+    [SerializeField] GameObject stateManager;
+    [SerializeField] GameObject playerUI;
 
     float health; //Players current health
     public float maxHealth = 100;
@@ -37,12 +38,9 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        if (inBattle)
-        {
-            //Keeps players health updated
+        //Keeps players health updated
             healthBar.value = health;
             healthText.text = $" HP: {health}";
-        }
     }
 
     void UpdateHealthBar()
@@ -53,9 +51,7 @@ public class Player : MonoBehaviour
     //Function that uses the current skill in one of the players 4 skill slots
     public void UseSkill(GameObject action)
     {
-        if (inBattle)
-        {
-            //Refrence the current skill in the skill slot
+        //Refrence the current skill in the skill slot
             AttackAction skill = action.GetComponent<AttackAction>();
 
             if (skill != null)
@@ -89,16 +85,12 @@ public class Player : MonoBehaviour
             {
                 Debug.Log("No Skill Equipped");
             }
-        }
     }
 
     //Reduces damage of next attack by 50%
     public void Defend()
     {
-        if (inBattle)
-        {
-            damageAppliedMult = 0.5f;
-        }
+        damageAppliedMult = 0.5f;
     }
 
     //Applies damage to the player
@@ -109,6 +101,17 @@ public class Player : MonoBehaviour
         Debug.Log($"Player recieved {totalDamage * damageAppliedMult} damage!");
 
         damageAppliedMult = 1; //Resets damage applied multiplier
+
+        if (health < 0)
+        {
+            for (int i = 0; i < targets.Count; i++) 
+            {
+                targets[i].SendMessage("Kill");
+            }
+            stateManager.SendMessage("GameOver");
+            playerUI.SetActive(false);
+            transform.position = new Vector3(4, 100, 0);
+        }
     }
 
     //Updates the players target list
@@ -120,10 +123,7 @@ public class Player : MonoBehaviour
 
     public void RegenHealth()
     {
-        if (inBattle)
-        {
-            Heal(regeneration);
-            }
+        Heal(regeneration);
     }
 
     void ResetHealth()
@@ -138,10 +138,5 @@ public class Player : MonoBehaviour
     {
         health += amount;
         ResetHealth();
-    }
-
-    public void Resting(bool state)
-    {
-        inBattle = state;
     }
 }

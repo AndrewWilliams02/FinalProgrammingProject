@@ -34,14 +34,16 @@ public class Enemy : MonoBehaviour
         //Sets the variables needed for damage
         float damage = Random.Range(attackDamage.x, attackDamage.y);
         float multiplier = 1f;
-        if (Random.Range(0, 1) <= critChance)
+        float critCheck = Random.Range(0f, 1f);
+        float accuracyCheck = Random.Range(0f, 1f);
+        if (critCheck <= critChance)
         {
             multiplier = 1.25f;
         }
         float totalDamage = Mathf.Round((damage * multiplier) * 10f) / 10f;
 
         //Checks if the player hits the enemy according to the current skills accuracy
-        if (Random.Range(0, 1) <= attackAccuracy)
+        if (accuracyCheck <= attackAccuracy)
         {
             player.SendMessage("ApplyDamage", totalDamage); //Calls the "Apply Damage" function on the player and deals the total attack damage
         }
@@ -56,7 +58,7 @@ public class Enemy : MonoBehaviour
     {
         health -= totalDamage;
         health = Mathf.Round(health * 10) / 10;
-        Debug.Log($"Player dealt {totalDamage} damage to {enemyName}!");
+        //Debug.Log($"Player dealt {totalDamage} damage to {enemyName}!");
 
         Kill();
     }
@@ -83,7 +85,8 @@ public class Enemy : MonoBehaviour
         if (health <= 0)
         {
             //Deletes current enemy from list and destroys it
-            enemyController.SendMessage("RemoveEnemy", gameObject);
+            EnemyController controller = enemyController.GetComponent<EnemyController>();
+            controller.RemoveEnemy(gameObject);
             Destroy(gameObject);
         }
     }

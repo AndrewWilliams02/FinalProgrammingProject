@@ -6,8 +6,6 @@ using static UnityEngine.GraphicsBuffer;
 
 public class TurnManager : MonoBehaviour
 {
-    bool isPlayersTurn = true;
-
     List<GameObject> enemies;
     [SerializeField] GameObject ui;
 
@@ -23,24 +21,31 @@ public class TurnManager : MonoBehaviour
             yield return new WaitForSeconds(0.75f);
         }
 
-        //Enables the players turn
-        isPlayersTurn = true;
-        ui.SendMessage("EnablePlayerTurnUI");
+        EnablePlayerTurn();
     }
 
     //Function called that ends the players turn
     public void EndPlayersTurn()
     {
-        if (isPlayersTurn)
+        if (enemies.Count > 0)
         {
-            isPlayersTurn = false;
             StartCoroutine(EnemyTurn()); //Starts enemy turns
+        }
+        else
+        {
+            EnablePlayerTurn();
         }
     }
 
     //Updates the turn managers enemy list
-    void UpdateEnemies(List<GameObject> aliveEnemies)
+    public void UpdateEnemies(List<GameObject> aliveEnemies)
     {
         enemies = aliveEnemies;
+    }
+
+    public void EnablePlayerTurn()
+    {
+        //Enables the players turn
+        ui.SendMessage("EnablePlayerTurnUI");
     }
 }

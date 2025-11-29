@@ -2,8 +2,6 @@ using UnityEngine;
 
 public class AttackAction : MonoBehaviour
 {
-    public Skills skill;
-
     //SKill info for the current skill
     public Rarity rarity;
     public string skillName;
@@ -12,11 +10,6 @@ public class AttackAction : MonoBehaviour
     public Vector2 damage;
     public int hitCount;
     public float accuracy, critChance, recoilDamage;
-
-    private void Awake()
-    {
-        UpdateSkillInfo(skill);
-    }
 
     //Function that updates the current skill slots info with the current skill whenever called
     public void UpdateSkillInfo(Skills skill)

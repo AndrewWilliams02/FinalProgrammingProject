@@ -7,8 +7,11 @@ public class Player : MonoBehaviour
 {
     [SerializeField] GameObject stateManager;
     [SerializeField] GameObject playerUI;
+    [SerializeField] GameObject targetIndicator;
 
-    public Item weaponSlot, armorSlot, ringSlot;
+    [SerializeField] GameObject[] skillSlots = new GameObject[4];
+    public Skills[] currentSkills = new Skills[4];
+    [SerializeField] Item weaponSlot, armorSlot, ringSlot;
 
     float health; //Players current health
     float maxHealth = 100;
@@ -17,6 +20,8 @@ public class Player : MonoBehaviour
     float regeneration = 0;
     float critChance = 0;
     float critMultiplier = 0;
+
+    int targetIndex = 0;
 
     float flatHP, percentHp;
     float flatDamage, percentDamage;
@@ -32,6 +37,11 @@ public class Player : MonoBehaviour
 
     public List<GameObject> targets = new List<GameObject>(); //Handles all enemies
 
+    void Awake()
+    {
+        UpdateSkills();
+    }
+
     void Start()
     {
         //Sets the values to the healthbar using the players health stats
@@ -45,8 +55,13 @@ public class Player : MonoBehaviour
     void Update()
     {
         //Keeps players health updated
-            healthBar.value = health;
-            healthText.text = $" HP: {health}";
+        healthBar.value = health;
+        healthText.text = $" HP: {health}";
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            CycleTarget();
+        }
     }
 
     void UpdateHealthBar()
@@ -58,45 +73,48 @@ public class Player : MonoBehaviour
     public void UseSkill(GameObject action)
     {
         //Refrence the current skill in the skill slot
-            AttackAction skill = action.GetComponent<AttackAction>();
+        AttackAction skill = action.GetComponent<AttackAction>();
 
-            if (skill != null)
+        if (skill != null)
+        {
+            int hitCount = skill.hitCount;
+
+            for (int i = 0; i < hitCount; i++)
             {
-                int hitCount = skill.hitCount;
-
-                for (int i = 0; i < hitCount; i++)
+                //Sets the variables needed for damage and buffs from the current skill
+                float damageTemp = Mathf.Round(Random.Range(skill.damage.x + damage / 2, skill.damage.y + damage));
+                float accuracyTemp = skill.accuracy, critChanceTemp = skill.critChance, recoilDamage = skill.recoilDamage;
+                float multiplier = 1f;
+                float critCheck = Random.Range(0f, 1f);
+                float accuracyCheck = Random.Range(0f, 1f);
+                if (critCheck <= critChanceTemp + critChance) //Checks if the player's attack crits and adjusts the modifier if so
                 {
-                    //Sets the variables needed for damage and buffs from the current skill
-                    float damageTemp = Mathf.Round(Random.Range(skill.damage.x + damage / 2, skill.damage.y + damage));
-                    float accuracyTemp = skill.accuracy, critChanceTemp = skill.critChance, recoilDamage = skill.recoilDamage;
-                    float multiplier = 1f;
-                    if (Random.Range(0, 1) <= critChanceTemp + critChance) //Checks if the player's attack crits and adjusts the modifier if so
-                    {
-                        multiplier = 1.25f + critMultiplier;
-                    }
-                    float totalDamage = Mathf.Round((damageTemp * multiplier) * 10f) / 10f; //Calculates the players total damage rounded to the nearest tenth
+                    multiplier = 1.25f + critMultiplier;
+                }
+                float totalDamage = Mathf.Round((damageTemp * multiplier) * 10f) / 10f; //Calculates the players total damage rounded to the nearest tenth
 
-                    if (Random.Range(0, 1) <= accuracyTemp) //Checks if the player hits the enemy according to the current skills accuracy
-                    {
-                        if (recoilDamage > 0) { health -= recoilDamage; } //Deals self damage to the player if the skill has recoil
-                        currentTarget.SendMessage("ApplyDamage", totalDamage); //Calls the "Apply Damage" function on the current enemy target and deals the total damage of the skill
-                    }
-                    else
-                    {
-                        Debug.Log("Attack Missed!");
-                    }
+                if (accuracyCheck <= accuracyTemp) //Checks if the player hits the enemy according to the current skills accuracy
+                {
+                    if (recoilDamage != 0) { health -= recoilDamage; } //Deals self damage to the player if the skill has recoil
+                    currentTarget.SendMessage("ApplyDamage", totalDamage); //Calls the "Apply Damage" function on the current enemy target and deals the total damage of the skill
+                }
+                else
+                {
+                    Debug.Log("Attack Missed!");
                 }
             }
-            else
-            {
-                Debug.Log("No Skill Equipped");
-            }
+        }
+        else
+        {
+            Debug.Log("No Skill Equipped");
+        }
     }
 
     //Reduces damage of next attack by 50%
     public void Defend()
     {
         damageAppliedMult = 0.5f;
+        Heal(new Vector2(0, 10));
     }
 
     //Applies damage to the player
@@ -104,7 +122,7 @@ public class Player : MonoBehaviour
     {
         health -= totalDamage * damageAppliedMult * (1 - damageReduction);
         health = Mathf.Round(health * 10) / 10;
-        Debug.Log($"Player recieved {totalDamage * damageAppliedMult} damage!");
+        //Debug.Log($"Player recieved {totalDamage * damageAppliedMult} damage!");
 
         damageAppliedMult = 1; //Resets damage applied multiplier
 
@@ -122,18 +140,26 @@ public class Player : MonoBehaviour
     }
 
     //Updates the players target list
-    void UpdateEnemies(List<GameObject> aliveEnemies)
+    public void UpdateEnemies(List<GameObject> aliveEnemies)
     {
         targets = aliveEnemies;
         if (targets.Count != 0)
         {
             currentTarget = targets[0];
+            targetIndex = 0;
+            UpdateTargetIndicator();
         }
     }
 
     public void RegenHealth()
     {
-        Heal(regeneration);
+        Heal(new Vector2 (regeneration, regeneration));
+    }
+
+    public void Rest()
+    {
+        float heal = maxHealth / 2;
+        Heal(new Vector2(heal, heal));
     }
 
     void ResetHealth()
@@ -144,9 +170,11 @@ public class Player : MonoBehaviour
         }
     }
 
-    public void Heal(float amount)
+    public void Heal(Vector2 amount)
     {
-        health += amount;
+        float healAmount = Random.Range(amount.x, amount.y);
+        health += healAmount;
+        health = Mathf.Round(health * 10) / 10;
         ResetHealth();
     }
 
@@ -269,5 +297,34 @@ public class Player : MonoBehaviour
         critMultiplier = 0 + critMultiplierBonus;
         damageAppliedMult = 1f;
         ResetHealth();
+    }
+
+    void CycleTarget()
+    {
+        if (targets.Count > 1)
+        {
+            targetIndex++;
+            currentTarget = targets[targetIndex%targets.Count];
+            UpdateTargetIndicator();
+        }
+    }
+
+    void UpdateTargetIndicator()
+    {
+        Vector3 currentPos = targetIndicator.transform.position;
+        currentPos = new Vector3(currentTarget.transform.position.x + 1, currentTarget.transform.position.y, 0);
+        targetIndicator.transform.position = currentPos;
+    }
+
+    public void UpdateSkills()
+    {
+        for(int i = 0; i < currentSkills.Length; i++)
+        {
+            if (currentSkills[i] != null)
+            {
+                AttackAction skill = skillSlots[i].GetComponent<AttackAction>();
+                skill.UpdateSkillInfo(currentSkills[i]);
+            }
+        }
     }
 }

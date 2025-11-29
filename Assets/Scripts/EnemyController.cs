@@ -6,7 +6,7 @@ public class EnemyController : MonoBehaviour
 {
     [SerializeField] List<EnemyTemplate> enemyType;
     [SerializeField] GameObject enemyPrefab;
-    GameObject player, turnManager;
+    GameObject player, turnManager, stateManager;
     List<GameObject> enemies = new List<GameObject>(); //Handles all enemies currently alive
 
     [SerializeField] GameObject[] spawners;
@@ -15,7 +15,12 @@ public class EnemyController : MonoBehaviour
     {
         player = GameObject.Find("Player");
         turnManager = GameObject.Find("TurnManager");
+        stateManager = GameObject.Find("State Manager");
+        GenerateEnemies();
+    }
 
+    void GenerateEnemies()
+    {
         int enemyNum = Random.Range(1, 4);
         SpawnEnemy(enemyNum);
     }
@@ -41,27 +46,35 @@ public class EnemyController : MonoBehaviour
     }
 
     //Function that removes enemy from the list of alive enemies
-    void RemoveEnemy(GameObject enemy)
+    public void RemoveEnemy(GameObject enemy)
     {
         enemies.Remove(enemy);
         UpdateLists();
-        Debug.Log("Removed Enemy");
+        //Debug.Log("Removed Enemy");
+
+        if (enemies.Count <= 0)
+        {
+            StateManager stateManagerScript = stateManager.GetComponent<StateManager>();
+            stateManagerScript.PostFight();
+        }
     }
 
     //Updates the alive enemy lists for player and turn manager
     void UpdateLists()
     {
-        player.SendMessage("UpdateEnemies", enemies);
-        turnManager.SendMessage("UpdateEnemies", enemies);
+        Player playerScript = player.GetComponent<Player>();
+        TurnManager turnManagerScript = turnManager.GetComponent<TurnManager>();
+        playerScript.UpdateEnemies(enemies);
+        turnManagerScript.UpdateEnemies(enemies);
     }
 
     void CreateEnemy(int index)
     {
         GameObject newEnemy = Instantiate(enemyPrefab, spawners[index].transform.position, Quaternion.identity);
         enemies.Add(newEnemy);
-        UpdateLists();
         EnemyTemplate newEnemyType = enemyType[Random.Range(0, enemyType.Count)];
         newEnemy.SendMessage("RandomizeEnemy", newEnemyType);
-        Debug.Log($"Spawned {newEnemyType.name}");
+        //Debug.Log($"Spawned {newEnemyType.name}");
+        UpdateLists();
     }
 }

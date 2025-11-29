@@ -48,16 +48,6 @@ public class EnemyController : MonoBehaviour
         Debug.Log("Removed Enemy");
     }
 
-    //Function that checks if there are any enemies left and spawns new ones if not
-    void CheckEnemies()
-    {
-        if (enemies.Count == 0)
-        {
-            int enemyNum = Random.Range(0, 4);
-            SpawnEnemy(enemyNum);
-        }
-    }
-
     //Updates the alive enemy lists for player and turn manager
     void UpdateLists()
     {

@@ -4168,12 +4168,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Player
   stateManager: {fileID: 457245712}
   playerUI: {fileID: 491258554}
-  maxHealth: 100
-  damageBonus: 0
-  damageReduction: 0
-  regeneration: 0
-  critChanceBonus: 0
-  critMultiplierBonus: 0
+  weaponSlot: {fileID: 0}
+  armorSlot: {fileID: 0}
+  ringSlot: {fileID: 0}
   healthBar: {fileID: 781950000}
   healthText: {fileID: 1369524400}
   damageAppliedMult: 1

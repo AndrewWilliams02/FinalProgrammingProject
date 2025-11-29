@@ -26,9 +26,6 @@ public class Enemy : MonoBehaviour
         //Keeps enemy's health updated
         healthBar.value = health;
         healthText.text = $" HP: {health}";
-
-        //Destroys records of enemy
-        Kill();
     }
 
     //Function that 
@@ -60,6 +57,8 @@ public class Enemy : MonoBehaviour
         health -= totalDamage;
         health = Mathf.Round(health * 10) / 10;
         Debug.Log($"Player dealt {totalDamage} damage to {enemyName}!");
+
+        Kill();
     }
 
     void RandomizeEnemy(EnemyTemplate enemy)

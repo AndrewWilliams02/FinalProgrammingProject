@@ -108,11 +108,11 @@ public class Player : MonoBehaviour
 
         damageAppliedMult = 1; //Resets damage applied multiplier
 
-        if (health < 0)
+        if (health <= 0)
         {
-            for (int i = 0; i < targets.Count; i++) 
+            for (int i = targets.Count - 1; i >= 0; i--) 
             {
-                targets[i].SendMessage("ApplyDammage", 1000000f);
+                targets[i].SendMessage("ApplyDamage", 1000000f);
             }
             ResetPlayer();
             playerUI.SetActive(false);
@@ -125,7 +125,10 @@ public class Player : MonoBehaviour
     void UpdateEnemies(List<GameObject> aliveEnemies)
     {
         targets = aliveEnemies;
-        currentTarget = targets[0];
+        if (targets.Count != 0)
+        {
+            currentTarget = targets[0];
+        }
     }
 
     public void RegenHealth()
@@ -156,7 +159,7 @@ public class Player : MonoBehaviour
         UpdateStats();
     }
 
-    public void EquipArmor(Item item)
+    public void EquipItem(Item item)
     {
         if (item.itemType == ItemType.Weapon)
         {

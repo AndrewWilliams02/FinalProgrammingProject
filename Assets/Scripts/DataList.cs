@@ -1,16 +1,10 @@
+using System.Collections.Generic;
 using UnityEngine;
 
-public class DataList : MonoBehaviour
+[CreateAssetMenu]
+public class DataList : ScriptableObject
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    public List<Item> allItems = new List<Item>();
+    public List<EnemyTemplate> allEnemies = new List<EnemyTemplate>();
+    public List<Skills> allSkills = new List<Skills>();
 }

@@ -6,12 +6,25 @@ using UnityEngine;
 public class CSVtoScriptableObjects
 {
     private static string enemyCSVPath = "/Editor/CSVs/Enemies.csv", skillCSVPath = "/Editor/CSVs/Skills.csv", itemCSVPath = "/Editor/CSVs/Items.csv";
+    private const string dataListPath = "Assets/Scriptable Objects/DataList.asset";
+
+    private static DataList GetDataList()
+    {
+        DataList dl = AssetDatabase.LoadAssetAtPath<DataList>(dataListPath);
+        if (dl == null)
+            Debug.LogError("DataList.asset not found!");
+        return dl;
+    }
 
     [MenuItem("Generation/Generate Skills")] //Ceates a new selection under the "Generation" tab in the unity editor to generate skills
     public static void GenerateSkills()
     {
+        DataList dataList = GetDataList();
+
         //Gets each line from the skills CSV file and seperates them into an array
         string[] allLines = File.ReadAllLines(Application.dataPath + skillCSVPath);
+
+        dataList.allSkills.Clear();
 
         //Loop that skips the first line of the CSV file (since they are headers) and creates a new scriptable object per line in the CSV
         for (int i = 1; i < allLines.Length; i++)
@@ -31,16 +44,22 @@ public class CSVtoScriptableObjects
 
             //Creates the skill scriptable object as a new assets inside of its respective folder
             AssetDatabase.CreateAsset(skill, $"Assets/Scriptable Objects/Skills/{skill.skillName}.asset");
+            dataList.allSkills.Add(skill);
         }
         //Saves the assets
+        EditorUtility.SetDirty(dataList);
         AssetDatabase.SaveAssets();
     }
 
     [MenuItem("Generation/Generate Enemies")] //Ceates a new selection undert the "Generation" tab in the unity editor to generate skills
     public static void GenerateEnemies()
     {
+        DataList dataList = GetDataList();
+
         //Simular code as previous function, but altered to create enemies using the enemies CSV
         string[] allLines = File.ReadAllLines(Application.dataPath + enemyCSVPath);
+
+        dataList.allEnemies.Clear();
 
         for (int i = 1; i < allLines.Length; i++)
         {
@@ -55,15 +74,21 @@ public class CSVtoScriptableObjects
             enemy.critChance = float.Parse(splitData[6]);
 
             AssetDatabase.CreateAsset(enemy, $"Assets/Scriptable Objects/Enemies/{enemy.enemyName}.asset");
+            dataList.allEnemies.Add(enemy);
         }
 
+        EditorUtility.SetDirty(dataList);
         AssetDatabase.SaveAssets();
     }
 
     [MenuItem("Generation/Generate Items")]
     public static void GenerateItems()
     {
+        DataList dataList = GetDataList();
+
         string[] allLines = File.ReadAllLines(Application.dataPath + itemCSVPath);
+
+        dataList.allItems.Clear();
 
         for (int i = 1; i < allLines.Length; i++)
         {
@@ -84,8 +109,10 @@ public class CSVtoScriptableObjects
             item.regen = float.Parse(splitData[11]);
 
             AssetDatabase.CreateAsset(item, $"Assets/Scriptable Objects/Items/{item.itemName}.asset");
+            dataList.allItems.Add(item);
         }
 
+        EditorUtility.SetDirty(dataList);
         AssetDatabase.SaveAssets();
     }
 }

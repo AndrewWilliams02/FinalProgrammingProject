@@ -5,6 +5,9 @@ using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
+    public TextMeshProUGUI moneyText;
+    public float money;
+
     [SerializeField] DataList dataList;
 
     [SerializeField] GameObject stateManager;
@@ -95,7 +98,7 @@ public class Player : MonoBehaviour
                     multiplier = 1.25f + critMultiplier;
                 }
                 float totalDamage = Mathf.Round(damageTemp * multiplier * 10f) / 10f; //Calculates the players total damage rounded to the nearest tenth
-                Debug.Log(totalDamage);
+                //Debug.Log(totalDamage);
 
                 if (accuracyCheck <= accuracyTemp) //Checks if the player hits the enemy according to the current skills accuracy
                 {
@@ -329,6 +332,20 @@ public class Player : MonoBehaviour
                 AttackAction skill = skillSlots[i].GetComponent<AttackAction>();
                 skill.UpdateSkillInfo(currentSkills[i]);
             }
+        }
+    }
+
+    public bool CanBuy(float amount)
+    {
+        if (amount < 0 && money > amount || amount > 0)
+        {
+            money += amount;
+            return true;
+        }
+        else
+        {
+            Debug.Log("Cant Afford");
+            return false;
         }
     }
 }

@@ -29,4 +29,6 @@ public class Item : ScriptableObject
     public float critMultiplier;
     [Tooltip("Regeneration Rate")]
     public float regen;
+    [Tooltip("Buy cost")]
+    public float cost;
 }

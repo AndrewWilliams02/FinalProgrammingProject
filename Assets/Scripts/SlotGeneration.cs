@@ -43,7 +43,7 @@ public class SlotGeneration : MonoBehaviour
                 return;
             case 2:
                 healModifier = Mathf.Round(Random.Range(0.1f, 0.5f) * 100) / 100;
-                Debug.Log(healModifier);
+                //Debug.Log(healModifier);
                 buttonText.text = $"Heal {healModifier * 100}%";
                 return;
         }

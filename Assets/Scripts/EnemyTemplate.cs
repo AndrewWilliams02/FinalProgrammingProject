@@ -18,4 +18,6 @@ public class EnemyTemplate : ScriptableObject
     public float attackAccuracy;
     [Tooltip("Percent chance to crit on hit")]
     public float critChance;
+    [Tooltip("Currecny gain")]
+    public float money;
 }

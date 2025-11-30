@@ -18,4 +18,5 @@ MonoBehaviour:
   hitCount: 1
   accuracy: 0.8
   critChance: 0.2
-  recoilDamage: 5
+  recoilDamage: 10
+  cost: 50

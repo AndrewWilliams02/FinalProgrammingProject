@@ -20,4 +20,6 @@ public class Skills : ScriptableObject //Scriptable object for housing data of u
     public float critChance;
     [Tooltip("Damage dealt to user on hit")]
     public float recoilDamage;
+    [Tooltip("Buy cost")]
+    public float cost;
 }

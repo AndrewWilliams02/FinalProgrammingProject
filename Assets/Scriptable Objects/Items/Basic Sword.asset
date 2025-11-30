@@ -24,3 +24,4 @@ MonoBehaviour:
   critChance: 0
   critMultiplier: 0
   regen: 0
+  cost: 50

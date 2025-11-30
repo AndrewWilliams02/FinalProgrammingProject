@@ -41,6 +41,7 @@ public class CSVtoScriptableObjects
             skill.accuracy = float.Parse(splitData[5]);
             skill.critChance = float.Parse(splitData[6]);
             skill.recoilDamage = float.Parse(splitData[7]);
+            skill.cost = float.Parse(splitData[8]);
 
             //Creates the skill scriptable object as a new assets inside of its respective folder
             AssetDatabase.CreateAsset(skill, $"Assets/Scriptable Objects/Skills/{skill.skillName}.asset");
@@ -72,6 +73,7 @@ public class CSVtoScriptableObjects
             enemy.attackDamage = new Vector2(float.Parse(splitData[3]), float.Parse(splitData[4]));
             enemy.attackAccuracy = float.Parse(splitData[5]);
             enemy.critChance = float.Parse(splitData[6]);
+            enemy.money = float.Parse(splitData[7]);
 
             AssetDatabase.CreateAsset(enemy, $"Assets/Scriptable Objects/Enemies/{enemy.enemyName}.asset");
             dataList.allEnemies.Add(enemy);
@@ -107,6 +109,7 @@ public class CSVtoScriptableObjects
             item.critChance = float.Parse(splitData[9]);
             item.critMultiplier = float.Parse(splitData[10]);
             item.regen = float.Parse(splitData[11]);
+            item.cost = float.Parse(splitData[12]);
 
             AssetDatabase.CreateAsset(item, $"Assets/Scriptable Objects/Items/{item.itemName}.asset");
             dataList.allItems.Add(item);

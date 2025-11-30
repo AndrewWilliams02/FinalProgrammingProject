@@ -18,3 +18,4 @@ MonoBehaviour:
   attackDamage: {x: 10, y: 15}
   attackAccuracy: 0.75
   critChance: 0.2
+  money: 100

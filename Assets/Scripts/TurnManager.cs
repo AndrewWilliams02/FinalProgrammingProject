@@ -45,7 +45,10 @@ public class TurnManager : MonoBehaviour
 
     public void EnablePlayerTurn()
     {
-        //Enables the players turn
-        ui.SendMessage("EnablePlayerTurnUI");
+        if (ui.activeInHierarchy)
+        {
+            //Enables the players turn
+            ui.SendMessage("EnablePlayerTurnUI");
+        }
     }
 }

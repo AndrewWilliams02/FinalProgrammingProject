@@ -4,12 +4,19 @@ using UnityEngine.VFX;
 
 public class EnemyController : MonoBehaviour
 {
+    [SerializeField] DataList dataList;
+
     [SerializeField] List<EnemyTemplate> enemyType;
     [SerializeField] GameObject enemyPrefab;
     GameObject player, turnManager, stateManager;
     List<GameObject> enemies = new List<GameObject>(); //Handles all enemies currently alive
 
     [SerializeField] GameObject[] spawners;
+
+    private void Awake()
+    {
+        enemyType = dataList.allEnemies;
+    }
 
     void Start()
     {

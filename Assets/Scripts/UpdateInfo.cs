@@ -6,7 +6,7 @@ public class UpdateInfo : MonoBehaviour
     [SerializeField] TextMeshProUGUI text;
     [SerializeField] GameObject skill;
 
-    void Start()
+    void OnEnable()
     {
         UpdateSkillInfo();
     }

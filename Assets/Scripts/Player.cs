@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
+    [SerializeField] DataList dataList;
+
     [SerializeField] GameObject stateManager;
     [SerializeField] GameObject playerUI;
     [SerializeField] GameObject targetIndicator;
@@ -39,6 +41,7 @@ public class Player : MonoBehaviour
 
     void Awake()
     {
+        currentSkills[0] = dataList.allSkills[0];
         UpdateSkills();
     }
 
@@ -91,7 +94,8 @@ public class Player : MonoBehaviour
                 {
                     multiplier = 1.25f + critMultiplier;
                 }
-                float totalDamage = Mathf.Round((damageTemp * multiplier) * 10f) / 10f; //Calculates the players total damage rounded to the nearest tenth
+                float totalDamage = Mathf.Round(damageTemp * multiplier * 10f) / 10f; //Calculates the players total damage rounded to the nearest tenth
+                Debug.Log(totalDamage);
 
                 if (accuracyCheck <= accuracyTemp) //Checks if the player hits the enemy according to the current skills accuracy
                 {
@@ -156,9 +160,9 @@ public class Player : MonoBehaviour
         Heal(new Vector2 (regeneration, regeneration));
     }
 
-    public void Rest()
+    public void Rest(float modifier)
     {
-        float heal = maxHealth / 2;
+        float heal = maxHealth * modifier;
         Heal(new Vector2(heal, heal));
     }
 
@@ -289,7 +293,7 @@ public class Player : MonoBehaviour
 
     void UpdateStats()
     {
-        maxHealth = (100 + flatHP) * (1 + percentHp);
+        maxHealth = Mathf.Round((100 + flatHP) * (1 + percentHp) * 10) / 10;
         damage = (0 + flatDamage) * (1 + percentDamage);
         damageReduction = (0 + flatDamageRed) * (1 + percentDamageRed);
         regeneration = 0 + regeneration;

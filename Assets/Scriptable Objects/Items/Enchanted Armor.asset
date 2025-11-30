@@ -19,7 +19,7 @@ MonoBehaviour:
   percentHP: 0.25
   flatDamage: 0
   percentDamage: 10
-  flatDamageRed: 0
+  flatDamageRed: 0.05
   percentDamageRed: 0.25
   critChance: 0
   critMultiplier: 0

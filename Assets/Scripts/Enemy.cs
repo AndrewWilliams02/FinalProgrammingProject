@@ -1,3 +1,4 @@
+using System.Data.SqlTypes;
 using System.Xml.Linq;
 using TMPro;
 using UnityEngine;
@@ -6,7 +7,7 @@ using UnityEngine.UI;
 public class Enemy : MonoBehaviour
 {
     //Variables to handle enemy stats
-    float health, critChance, attackAccuracy;
+    float money, health, critChance, attackAccuracy;
     Vector2 attackDamage;
     string enemyName;
 
@@ -71,6 +72,7 @@ public class Enemy : MonoBehaviour
         attackAccuracy = enemy.attackAccuracy;
         attackDamage = new Vector2(Mathf.Round(enemy.attackDamage.x * modifier * 10) / 10, Mathf.Round(enemy.attackDamage.y * modifier * 10) / 10);
         enemyName = enemy.name;
+        money = enemy.money;
 
         //Sets the values to the healthbar using the enemy's health stats
         healthBar.minValue = 0;
@@ -87,6 +89,8 @@ public class Enemy : MonoBehaviour
             //Deletes current enemy from list and destroys it
             EnemyController controller = enemyController.GetComponent<EnemyController>();
             controller.RemoveEnemy(gameObject);
+            Player playerScript = player.GetComponent<Player>();
+            playerScript.AddMoney(money);
             Destroy(gameObject);
         }
     }

@@ -35,14 +35,14 @@ public class ShopGeneration : MonoBehaviour
             case 0:
                 randomItem = dataList.allItems[Random.Range(0, dataList.allItems.Count)];
                 merchText.text = randomItem.name;
-                cost = -randomItem.cost;
-                costText.text = $"${-cost}";
+                cost = randomItem.cost;
+                costText.text = $"${cost}";
                 return;
             case 1:
                 randomSkill = dataList.allSkills[Random.Range(0, dataList.allSkills.Count)];
                 merchText.text = randomSkill.name;
-                cost = -randomSkill.cost;
-                costText.text = $"${-cost}";
+                cost = randomSkill.cost;
+                costText.text = $"${cost}";
                 return;
         }
     }

@@ -2,9 +2,12 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using static UnityEditor.Progress;
 
 public class Player : MonoBehaviour
 {
+    public TextMeshProUGUI[] equipmentText = new TextMeshProUGUI[3];
+    public TextMeshProUGUI statsText;
     public TextMeshProUGUI moneyText;
     public float money;
 
@@ -46,6 +49,9 @@ public class Player : MonoBehaviour
     {
         currentSkills[0] = dataList.allSkills[0];
         UpdateSkills();
+        equipmentText[0].text = "Weapon\nSlot";
+        equipmentText[1].text = "Armor\nSlot";
+        equipmentText[2].text = "Ring\nSlot";
     }
 
     void Start()
@@ -56,13 +62,13 @@ public class Player : MonoBehaviour
         UpdateHealthBar();
         healthBar.value = health;
         healthText.text = $" HP: {health}";
+        moneyText.text = $"${money}";
+        UpdateStatText();
     }
 
     void Update()
     {
-        //Keeps players health updated
-        healthBar.value = health;
-        healthText.text = $" HP: {health}";
+        
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
@@ -130,6 +136,10 @@ public class Player : MonoBehaviour
         health -= totalDamage * damageAppliedMult * (1 - damageReduction);
         health = Mathf.Round(health * 10) / 10;
         //Debug.Log($"Player recieved {totalDamage * damageAppliedMult} damage!");
+
+        //Keeps players health updated
+        healthBar.value = health;
+        healthText.text = $" HP: {health}";
 
         damageAppliedMult = 1; //Resets damage applied multiplier
 
@@ -201,18 +211,21 @@ public class Player : MonoBehaviour
             weaponSlot = item;
             UpdateBonuses();
             UpdateStats();
+            equipmentText[0].text = item.name;
         }
         else if (item.itemType == ItemType.Armor)
         {
             armorSlot = item;
             UpdateBonuses();
             UpdateStats();
+            equipmentText[1].text = item.name;
         }
         else if (item.itemType == ItemType.Ring)
         {
             ringSlot = item;
             UpdateBonuses();
             UpdateStats();
+            equipmentText[2].text = item.name;
         }
     }
 
@@ -299,11 +312,16 @@ public class Player : MonoBehaviour
         maxHealth = Mathf.Round((100 + flatHP) * (1 + percentHp) * 10) / 10;
         damage = (0 + flatDamage) * (1 + percentDamage);
         damageReduction = (0 + flatDamageRed) * (1 + percentDamageRed);
-        regeneration = 0 + regeneration;
         critChance = 0 + critChanceBonus;
+        regeneration = 0 + regeneration;
         critMultiplier = 0 + critMultiplierBonus;
         damageAppliedMult = 1f;
         ResetHealth();
+    }
+
+    public void UpdateStatText()
+    {
+        statsText.text = $"Max HP: {maxHealth}\nRegeneration: {regeneration}/turn\nDamage Bonus: +{damage}\nDamage Reduction: {damageReduction}%\nCrit Chance Bonus: +{critChance}%\nCrit Multiplier Bonus: +{critMultiplier}";
     }
 
     void CycleTarget()
@@ -337,9 +355,10 @@ public class Player : MonoBehaviour
 
     public bool CanBuy(float amount)
     {
-        if (amount < 0 && money-amount >= 0 || amount > 0)
+        if (money-amount >= 0)
         {
-            money += amount;
+            money -= amount;
+            moneyText.text = $"${money}";
             return true;
         }
         else
@@ -347,5 +366,11 @@ public class Player : MonoBehaviour
             Debug.Log("Cant Afford");
             return false;
         }
+    }
+
+    public void AddMoney(float amount)
+    {
+        money += amount;
+        moneyText.text = $"${money}";
     }
 }

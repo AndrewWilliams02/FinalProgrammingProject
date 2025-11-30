@@ -13,6 +13,7 @@ public class StateManager : MonoBehaviour
     public void StartResting()
     {
         SetState(false, true, false, false);
+        player.SendMessage("UpdateStatText");
     }
 
     public void StartBattle()

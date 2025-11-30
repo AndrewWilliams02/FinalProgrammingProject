@@ -337,7 +337,7 @@ public class Player : MonoBehaviour
 
     public bool CanBuy(float amount)
     {
-        if (amount < 0 && money > amount || amount > 0)
+        if (amount < 0 && money-amount >= 0 || amount > 0)
         {
             money += amount;
             return true;

@@ -63,13 +63,13 @@ public class Enemy : MonoBehaviour
         Kill();
     }
 
-    void RandomizeEnemy(EnemyTemplate enemy)
+    public void RandomizeEnemy(EnemyTemplate enemy, float modifier)
     {
         //Initialize enemy stats from scriptable object
-        health = enemy.maxHP;
+        health = Mathf.Round(enemy.maxHP * modifier * 10) / 10;
         critChance = enemy.critChance;
         attackAccuracy = enemy.attackAccuracy;
-        attackDamage = enemy.attackDamage;
+        attackDamage = new Vector2(Mathf.Round(enemy.attackDamage.x * modifier * 10) / 10, Mathf.Round(enemy.attackDamage.y * modifier * 10) / 10);
         enemyName = enemy.name;
 
         //Sets the values to the healthbar using the enemy's health stats

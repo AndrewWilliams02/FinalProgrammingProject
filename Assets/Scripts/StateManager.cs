@@ -20,6 +20,7 @@ public class StateManager : MonoBehaviour
         SetState(true, false, false, false);
         if (battleStage > 0)
         {
+            enemyController.SendMessage("IncreaseDifficulty", 1.1f);
             enemyController.SendMessage("GenerateEnemies");
             turnManager.SendMessage("EnablePlayerTurn");
         }

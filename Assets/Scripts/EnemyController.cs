@@ -4,6 +4,8 @@ using UnityEngine.VFX;
 
 public class EnemyController : MonoBehaviour
 {
+    float difficultyModifier = 1f;
+
     [SerializeField] DataList dataList;
 
     [SerializeField] List<EnemyTemplate> enemyType;
@@ -80,8 +82,14 @@ public class EnemyController : MonoBehaviour
         GameObject newEnemy = Instantiate(enemyPrefab, spawners[index].transform.position, Quaternion.identity);
         enemies.Add(newEnemy);
         EnemyTemplate newEnemyType = enemyType[Random.Range(0, enemyType.Count)];
-        newEnemy.SendMessage("RandomizeEnemy", newEnemyType);
+        Enemy enemyScript = newEnemy.GetComponent<Enemy>();
+        enemyScript.RandomizeEnemy(newEnemyType, difficultyModifier);
         //Debug.Log($"Spawned {newEnemyType.name}");
         UpdateLists();
+    }
+
+    public void IncreaseDifficulty(float modifier)
+    {
+        difficultyModifier *= modifier;
     }
 }

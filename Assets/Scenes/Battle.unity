@@ -4893,6 +4893,7 @@ MonoBehaviour:
   gameOver: {fileID: 968714372}
   reward: {fileID: 211611933}
   turnManager: {fileID: 1184426104}
+  difficultyMod: 0.05
 --- !u!1 &464449610
 GameObject:
   m_ObjectHideFlags: 0
@@ -9599,7 +9600,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &968714373
 Transform:
   m_ObjectHideFlags: 0

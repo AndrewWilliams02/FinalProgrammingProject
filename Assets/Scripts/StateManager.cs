@@ -4,6 +4,7 @@ public class StateManager : MonoBehaviour
 {
     public GameObject player, enemyController, battle, rest, gameOver, reward, turnManager;
     int battleStage = 0;
+    public float difficultyMod = 0.05f;
 
     private void Start()
     {
@@ -21,7 +22,7 @@ public class StateManager : MonoBehaviour
         SetState(true, false, false, false);
         if (battleStage > 0)
         {
-            enemyController.SendMessage("IncreaseDifficulty", 1.1f);
+            enemyController.SendMessage("IncreaseDifficulty", 1 + difficultyMod);
             enemyController.SendMessage("GenerateEnemies");
             turnManager.SendMessage("EnablePlayerTurn");
         }

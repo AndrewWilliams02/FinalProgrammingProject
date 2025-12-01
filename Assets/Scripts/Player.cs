@@ -17,6 +17,10 @@ public class Player : MonoBehaviour
     [SerializeField] GameObject playerUI;
     [SerializeField] GameObject targetIndicator;
 
+    [SerializeField] GameObject[] equipmentInfo = new GameObject[3];
+    [SerializeField] TextMeshProUGUI[] equipmentInfoText = new TextMeshProUGUI[3];
+    bool[] infoVisible = new bool[3];
+
     [SerializeField] GameObject[] skillSlots = new GameObject[4];
     public Skills[] currentSkills = new Skills[4];
     [SerializeField] Item weaponSlot, armorSlot, ringSlot;
@@ -52,6 +56,10 @@ public class Player : MonoBehaviour
         equipmentText[0].text = "Weapon\nSlot";
         equipmentText[1].text = "Armor\nSlot";
         equipmentText[2].text = "Ring\nSlot";
+        for (int i = 0; i < infoVisible.Length; i++)
+        {
+            infoVisible[i] = false;
+        }
     }
 
     void Start()
@@ -193,6 +201,8 @@ public class Player : MonoBehaviour
         health += healAmount;
         health = Mathf.Round(health * 10) / 10;
         ResetHealth();
+        healthBar.value = health;
+        healthText.text = $" HP: {health}";
     }
 
     public void ResetPlayer()
@@ -212,6 +222,7 @@ public class Player : MonoBehaviour
             UpdateBonuses();
             UpdateStats();
             equipmentText[0].text = item.name;
+            equipmentText[0].color = Color.green;
         }
         else if (item.itemType == ItemType.Armor)
         {
@@ -219,6 +230,7 @@ public class Player : MonoBehaviour
             UpdateBonuses();
             UpdateStats();
             equipmentText[1].text = item.name;
+            equipmentText[0].color = Color.green;
         }
         else if (item.itemType == ItemType.Ring)
         {
@@ -226,6 +238,7 @@ public class Player : MonoBehaviour
             UpdateBonuses();
             UpdateStats();
             equipmentText[2].text = item.name;
+            equipmentText[0].color = Color.green;
         }
     }
 
@@ -372,5 +385,83 @@ public class Player : MonoBehaviour
     {
         money += amount;
         moneyText.text = $"${money}";
+    }
+
+    public void DisplayEquipmentInfo(int slot)
+    {
+        switch (slot)
+        {
+            case 0:
+                if (!infoVisible[slot] && weaponSlot != null)
+                {
+                    string text = "";
+                    equipmentInfo[slot].SetActive(true);
+                    if (weaponSlot.name != null) { text = weaponSlot.name; } else { text = "None"; break; }
+                    if (weaponSlot.flatHP > 0) { text += $"\nHP: {weaponSlot.flatHP}"; }
+                    if (weaponSlot.percentHP > 0) { text += $"\nHP%: {weaponSlot.percentHP}%"; }
+                    if (weaponSlot.flatDamage > 0) { text += $"\nDmg: {weaponSlot.flatDamage}"; }
+                    if (weaponSlot.percentDamage > 0) { text += $"\nDmg%: {weaponSlot.percentDamage}%"; }
+                    if (weaponSlot.flatDamageRed > 0) { text += $"\nDmgRed: {weaponSlot.flatDamageRed}"; }
+                    if (weaponSlot.percentDamageRed > 0) { text += $"\nDmgRed%: {weaponSlot.percentDamageRed}%"; }
+                    if (weaponSlot.critChance > 0) { text += $"\nCritChance: {weaponSlot.critChance}%"; }
+                    if (weaponSlot.critMultiplier > 0) { text += $"\nCritMult: {weaponSlot.critMultiplier}x"; }
+                    if (weaponSlot.regen > 0) { text += $"\nRegen: {weaponSlot.regen}/Turn"; }
+                    equipmentInfoText[slot].text = text;
+                    infoVisible[slot] = true;
+                } else
+                {
+                    infoVisible[slot] = false;
+                    equipmentInfo[slot].SetActive(false);
+                }
+                    return;
+            case 1:
+                if (!infoVisible[slot] && armorSlot != null)
+                {
+                    string text = "";
+                    equipmentInfo[slot].SetActive(true);
+                    if (armorSlot.name != null) { text = armorSlot.name; } else { text = "None"; break; }
+                    if (armorSlot.flatHP > 0) { text += $"\nHP: {armorSlot.flatHP}"; }
+                    if (armorSlot.percentHP > 0) { text += $"\nHP%: {armorSlot.percentHP}%"; }
+                    if (armorSlot.flatDamage > 0) { text += $"\nDmg: {armorSlot.flatDamage}"; }
+                    if (armorSlot.percentDamage > 0) { text += $"\nDmg%: {armorSlot.percentDamage}%"; }
+                    if (armorSlot.flatDamageRed > 0) { text += $"\nDmgRed: {armorSlot.flatDamageRed}"; }
+                    if (armorSlot.percentDamageRed > 0) { text += $"\nDmgRed%: {armorSlot.percentDamageRed}%"; }
+                    if (armorSlot.critChance > 0) { text += $"\nCritChance: {armorSlot.critChance}%"; }
+                    if (armorSlot.critMultiplier > 0) { text += $"\nCritMult: {armorSlot.critMultiplier}x"; }
+                    if (armorSlot.regen > 0) { text += $"\nRegen: {armorSlot.regen}/Turn"; }
+                    equipmentInfoText[slot].text = text;
+                    infoVisible[slot] = true;
+                }
+                else
+                {
+                    infoVisible[slot] = false;
+                    equipmentInfo[slot].SetActive(false);
+                }
+                return;
+            case 2:
+                if (!infoVisible[slot] && ringSlot != null)
+                {
+                    string text = "";
+                    equipmentInfo[slot].SetActive(true);
+                    if (ringSlot.name != null) { text = ringSlot.name; } else { text = "None"; break; }
+                    if (ringSlot.flatHP > 0) { text += $"\nHP: {ringSlot.flatHP}"; }
+                    if (ringSlot.percentHP > 0) { text += $"\nHP%: {ringSlot.percentHP}%"; }
+                    if (ringSlot.flatDamage > 0) { text += $"\nDmg: {ringSlot.flatDamage}"; }
+                    if (ringSlot.percentDamage > 0) { text += $"\nDmg%: {ringSlot.percentDamage}%"; }
+                    if (ringSlot.flatDamageRed > 0) { text += $"\nDmgRed: {ringSlot.flatDamageRed}"; }
+                    if (ringSlot.percentDamageRed > 0) { text += $"\nDmgRed%: {ringSlot.percentDamageRed}%"; }
+                    if (ringSlot.critChance > 0) { text += $"\nCritChance: {ringSlot.critChance}%"; }
+                    if (ringSlot.critMultiplier > 0) { text += $"\nCritMult: {ringSlot.critMultiplier}x"; }
+                    if (ringSlot.regen > 0) { text += $"\nRegen: {ringSlot.regen}/Turn"; }
+                    equipmentInfoText[slot].text = text;
+                    infoVisible[slot] = true;
+                }
+                else
+                {
+                    infoVisible[slot] = false;
+                    equipmentInfo[slot].SetActive(false);
+                }
+                return;
+        }
     }
 }

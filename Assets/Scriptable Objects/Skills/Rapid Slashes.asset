@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4a4b60698efd73c4d8efccfd5f522054, type: 3}
-  m_Name: Wide Slash
+  m_Name: Rapid Slashes
   m_EditorClassIdentifier: Assembly-CSharp::Skills
-  skillName: Wide Slash
+  skillName: Rapid Slashes
   rarity: 1
-  damage: {x: 3, y: 7}
-  hitCount: 1
-  accuracy: 0.85
-  critChance: 0.15
+  damage: {x: 2, y: 5}
+  hitCount: 3
+  accuracy: 0.9
+  critChance: 0.1
   recoilDamage: 0
-  cost: 100
-  hasAoe: 1
+  cost: 125
+  hasAoe: 0

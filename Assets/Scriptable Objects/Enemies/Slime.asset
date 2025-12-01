@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyTemplate
   enemyName: Slime
   enemyType: 0
-  maxHP: 50
+  maxHP: 25
   attackDamage: {x: 2.5, y: 5}
-  attackAccuracy: 0.9
-  critChance: 0.1
+  attackAccuracy: 0.85
+  critChance: 0.05
   money: 10

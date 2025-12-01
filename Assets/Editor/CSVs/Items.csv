@@ -1,4 +1,17 @@
 Name,Rarity,Type,FlatHealth,HealthPercent,FlatDamage,DamagePercent,FlatDamageReduction,DamageReductionPercent,CritChance,CritDamage,Regeneration,Cost
-Basic Sword,Common,Weapon,0,0,4,0,0,0,0,0,0,50
-Enchanted Armor,Rare,Armor,10,0.25,0,0.1,0.05,0.25,0,0,5,500
-Broken Ring,Common,Ring,-5,0,-2.5,0,0,0,0,0,2.5,25
+Basic Sword,Common,Weapon,0,0,1.5,0,0,0,0,0,0,25
+Basic Armor,Common,Armor,5,0,0,0,0.05,0,0,0,0,25
+Basic Ring,Common,Ring,2.5,0,1,0,0,0,0.05,0.05,2.5,25
+Enchanted Sword,Uncommon,Weapon,0,0,2.5,0.05,0,0,0.05,0.025,0,125
+Enchanted Armor,Uncommon,Armor,10,0.05,0,0,0.05,0.1,0,0,2.5,250
+Enchanted Ring,Uncommon,Ring,5,0.05,1,0,0.025,0,0.025,0.025,5,350
+Greatsword,Uncommon,Weapon,0,0,6,0.025,0.025,0,-0.05,0.1,0,350
+Dagger,Uncommon,Weapon,0,0,1,0.01,-0.05,0,0.1,0.15,0,350
+Heavy Armor,Uncommon,Armor,20,0.1,0,0,0.1,0.15,-0.1,0,10,450
+Ring of Regen,Rare,Ring,0,-0.2,0,0,0,0,0,0,20,500
+Ring of Power,Rare,Ring,0,0,2.5,0.1,0,0,0,0,0,750
+Ring of Sustain,Rare,Ring,5,0.025,0,0,0.1,0.1,0,0,0,800
+Ring of Critical,Rare,Ring,0,0,0,0,0,0,0.2,0.25,0,750
+Bloody Katana,Legendary,Weapon,-10,-0.15,10,0.1,-0.05,0,0.05,0.1,-2.5,4000
+Berserking Armor,Legendary,Armor,50,0.05,0,0,0.2,0,0,0,10,5000
+Blessed Ring,Legendary,Ring,0,0.2,0,0.2,0,0.2,0.1,0.25,5,7500

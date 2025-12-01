@@ -15,6 +15,7 @@ public class Enemy : MonoBehaviour
 
     [SerializeField] Slider healthBar;
     [SerializeField] TextMeshProUGUI healthText;
+    [SerializeField] TextMeshProUGUI nameplate;
 
     void Start()
     {
@@ -79,6 +80,7 @@ public class Enemy : MonoBehaviour
         healthBar.maxValue = health;
         healthBar.value = health;
         healthText.text = $" HP: {health}";
+        nameplate.text = enemy.name;
     }
 
     //Function to delete the enemy on death

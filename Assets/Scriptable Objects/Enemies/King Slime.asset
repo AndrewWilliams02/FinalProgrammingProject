@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cfed4cc79084ebb45955c61cb08712e3, type: 3}
-  m_Name: Bandit
+  m_Name: King Slime
   m_EditorClassIdentifier: Assembly-CSharp::EnemyTemplate
-  enemyName: Bandit
-  enemyType: 0
-  maxHP: 50
-  attackDamage: {x: 4, y: 6}
-  attackAccuracy: 0.9
-  critChance: 0.15
-  money: 40
+  enemyName: King Slime
+  enemyType: 2
+  maxHP: 150
+  attackDamage: {x: 7.5, y: 12.5}
+  attackAccuracy: 0.8
+  critChance: 0.1
+  money: 500

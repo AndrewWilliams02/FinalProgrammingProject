@@ -10,18 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bdf97e47bad70534ca3c99beb1054ae4, type: 3}
-  m_Name: Enchanted Armor
+  m_Name: Heavy Armor
   m_EditorClassIdentifier: Assembly-CSharp::Item
-  itemName: Enchanted Armor
+  itemName: Heavy Armor
   rarity: 1
   itemType: 1
-  flatHP: 10
-  percentHP: 0.05
+  flatHP: 20
+  percentHP: 0.1
   flatDamage: 0
   percentDamage: 0
-  flatDamageRed: 0.05
-  percentDamageRed: 0.1
-  critChance: 0
+  flatDamageRed: 0.1
+  percentDamageRed: 0.15
+  critChance: -0.1
   critMultiplier: 0
-  regen: 2.5
-  cost: 250
+  regen: 10
+  cost: 450

@@ -9,15 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4a4b60698efd73c4d8efccfd5f522054, type: 3}
-  m_Name: Wide Slash
-  m_EditorClassIdentifier: Assembly-CSharp::Skills
-  skillName: Wide Slash
-  rarity: 1
-  damage: {x: 3, y: 7}
-  hitCount: 1
-  accuracy: 0.85
+  m_Script: {fileID: 11500000, guid: cfed4cc79084ebb45955c61cb08712e3, type: 3}
+  m_Name: Forest Mother
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyTemplate
+  enemyName: Forest Mother
+  enemyType: 2
+  maxHP: 200
+  attackDamage: {x: 10, y: 20}
+  attackAccuracy: 0.75
   critChance: 0.15
-  recoilDamage: 0
-  cost: 100
-  hasAoe: 1
+  money: 1500

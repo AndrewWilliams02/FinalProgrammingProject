@@ -17,11 +17,11 @@ MonoBehaviour:
   itemType: 0
   flatHP: 0
   percentHP: 0
-  flatDamage: 4
+  flatDamage: 1.5
   percentDamage: 0
   flatDamageRed: 0
   percentDamageRed: 0
   critChance: 0
   critMultiplier: 0
   regen: 0
-  cost: 50
+  cost: 25

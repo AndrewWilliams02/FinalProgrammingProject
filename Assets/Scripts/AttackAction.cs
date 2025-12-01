@@ -26,5 +26,16 @@ public class AttackAction : MonoBehaviour
             recoilDamage = skill.recoilDamage;
             hasAoe = skill.hasAoe;
         }
+        else
+        {
+            rarity = Rarity.Common;
+            skillName = "";
+            hitCount = 0;
+            damage = Vector2.zero;
+            accuracy = 0;
+            critChance = 0;
+            recoilDamage = 0;
+            hasAoe = false;
+        }
     }
 }

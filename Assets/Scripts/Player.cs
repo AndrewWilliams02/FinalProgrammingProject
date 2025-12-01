@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using TMPro;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UI;
 using static UnityEditor.Progress;
@@ -52,6 +53,9 @@ public class Player : MonoBehaviour
     void Awake()
     {
         currentSkills[0] = dataList.allSkills[0];
+        currentSkills[1] = dataList.allSkills[0];
+        currentSkills[2] = dataList.allSkills[0];
+        currentSkills[3] = dataList.allSkills[0];
         UpdateSkills();
         equipmentText[0].text = "Weapon\nSlot";
         equipmentText[1].text = "Armor\nSlot";
@@ -223,9 +227,9 @@ public class Player : MonoBehaviour
         UpdateStats();
 
         currentSkills[0] = dataList.allSkills[0];
-        currentSkills[1] = null;
-        currentSkills[2] = null;
-        currentSkills[3] = null;
+        currentSkills[1] = dataList.allSkills[0];
+        currentSkills[2] = dataList.allSkills[0];
+        currentSkills[3] = dataList.allSkills[0];
         UpdateSkills();
 
         maxHealth = 100;
@@ -387,7 +391,7 @@ public class Player : MonoBehaviour
     {
         for(int i = 0; i < currentSkills.Length; i++)
         {
-            if (currentSkills[i] != null)
+            if (currentSkills[i])
             {
                 AttackAction skill = skillSlots[i].GetComponent<AttackAction>();
                 skill.UpdateSkillInfo(currentSkills[i]);

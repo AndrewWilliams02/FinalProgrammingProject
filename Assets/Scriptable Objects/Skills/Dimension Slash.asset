@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4a4b60698efd73c4d8efccfd5f522054, type: 3}
-  m_Name: Wide Slash
+  m_Name: Dimension Slash
   m_EditorClassIdentifier: Assembly-CSharp::Skills
-  skillName: Wide Slash
-  rarity: 1
-  damage: {x: 3, y: 7}
-  hitCount: 1
-  accuracy: 0.85
+  skillName: Dimension Slash
+  rarity: 2
+  damage: {x: 7.5, y: 10}
+  hitCount: 2
+  accuracy: 1
   critChance: 0.15
   recoilDamage: 0
-  cost: 100
+  cost: 500
   hasAoe: 1

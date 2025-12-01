@@ -10,18 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bdf97e47bad70534ca3c99beb1054ae4, type: 3}
-  m_Name: Enchanted Armor
+  m_Name: Greatsword
   m_EditorClassIdentifier: Assembly-CSharp::Item
-  itemName: Enchanted Armor
+  itemName: Greatsword
   rarity: 1
-  itemType: 1
-  flatHP: 10
-  percentHP: 0.05
-  flatDamage: 0
-  percentDamage: 0
-  flatDamageRed: 0.05
-  percentDamageRed: 0.1
-  critChance: 0
-  critMultiplier: 0
-  regen: 2.5
-  cost: 250
+  itemType: 0
+  flatHP: 0
+  percentHP: 0
+  flatDamage: 6
+  percentDamage: 0.025
+  flatDamageRed: 0.025
+  percentDamageRed: 0
+  critChance: -0.05
+  critMultiplier: 0.1
+  regen: 0
+  cost: 350

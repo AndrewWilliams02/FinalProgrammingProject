@@ -38,10 +38,18 @@ public class SlotGeneration : MonoBehaviour
                 buttonText.text = randomItem.name;
                 return;
             case 1:
+                randomItem = dataList.allItems[Random.Range(0, dataList.allItems.Count)];
+                buttonText.text = randomItem.name;
+                return;
+            case 2:
                 randomSkill = dataList.allSkills[Random.Range(0, dataList.allSkills.Count)];
                 buttonText.text = randomSkill.name;
                 return;
-            case 2:
+            case 3:
+                randomSkill = dataList.allSkills[Random.Range(0, dataList.allSkills.Count)];
+                buttonText.text = randomSkill.name;
+                return;
+            case 4:
                 healModifier = Mathf.Round(Random.Range(0.1f, 0.5f) * 100) / 100;
                 //Debug.Log(healModifier);
                 buttonText.text = $"Heal {healModifier * 100}%";

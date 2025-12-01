@@ -10,6 +10,7 @@ public class AttackAction : MonoBehaviour
     public Vector2 damage;
     public int hitCount;
     public float accuracy, critChance, recoilDamage;
+    public bool hasAoe;
 
     //Function that updates the current skill slots info with the current skill whenever called
     public void UpdateSkillInfo(Skills skill)
@@ -23,6 +24,7 @@ public class AttackAction : MonoBehaviour
             accuracy = skill.accuracy;
             critChance = skill.critChance;
             recoilDamage = skill.recoilDamage;
+            hasAoe = skill.hasAoe;
         }
     }
 }

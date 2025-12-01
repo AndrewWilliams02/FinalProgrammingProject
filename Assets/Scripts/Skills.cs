@@ -22,4 +22,6 @@ public class Skills : ScriptableObject //Scriptable object for housing data of u
     public float recoilDamage;
     [Tooltip("Buy cost")]
     public float cost;
+    [Tooltip("If the attack hits all enemies")]
+    public bool hasAoe;
 }

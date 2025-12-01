@@ -7546,6 +7546,7 @@ MonoBehaviour:
   accuracy: 0
   critChance: 0
   recoilDamage: 0
+  hasAoe: 0
 --- !u!1 &717292726
 GameObject:
   m_ObjectHideFlags: 0
@@ -8489,6 +8490,7 @@ MonoBehaviour:
   accuracy: 0
   critChance: 0
   recoilDamage: 0
+  hasAoe: 0
 --- !u!1 &825244244
 GameObject:
   m_ObjectHideFlags: 0
@@ -8945,6 +8947,7 @@ MonoBehaviour:
   accuracy: 0
   critChance: 0
   recoilDamage: 0
+  hasAoe: 0
 --- !u!1 &868425633
 GameObject:
   m_ObjectHideFlags: 0
@@ -9412,6 +9415,7 @@ MonoBehaviour:
   accuracy: 0
   critChance: 0
   recoilDamage: 0
+  hasAoe: 0
 --- !u!1 &904185134
 GameObject:
   m_ObjectHideFlags: 0
@@ -9543,7 +9547,7 @@ MonoBehaviour:
   - {fileID: 820370356}
   currentSkills:
   - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 11400000, guid: 501f37a123fab6e46bc7692ab2946bb5, type: 2}
   - {fileID: 0}
   - {fileID: 0}
   weaponSlot: {fileID: 0}

@@ -20,3 +20,4 @@ MonoBehaviour:
   critChance: 0.1
   recoilDamage: 0
   cost: 25
+  hasAoe: 0

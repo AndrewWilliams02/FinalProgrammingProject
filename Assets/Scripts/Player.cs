@@ -117,7 +117,17 @@ public class Player : MonoBehaviour
                 if (accuracyCheck <= accuracyTemp) //Checks if the player hits the enemy according to the current skills accuracy
                 {
                     if (recoilDamage != 0) { health -= recoilDamage; } //Deals self damage to the player if the skill has recoil
-                    currentTarget.SendMessage("ApplyDamage", totalDamage); //Calls the "Apply Damage" function on the current enemy target and deals the total damage of the skill
+                    if (skill.hasAoe)
+                    {
+                        for (int j = targets.Count - 1; j >= 0; j--)
+                        {
+                            targets[j].SendMessage("ApplyDamage", totalDamage);
+                        }
+                    }
+                    else
+                    {
+                        currentTarget.SendMessage("ApplyDamage", totalDamage); //Calls the "Apply Damage" function on the current enemy target and deals the total damage of the skill
+                    }
                 }
                 else
                 {

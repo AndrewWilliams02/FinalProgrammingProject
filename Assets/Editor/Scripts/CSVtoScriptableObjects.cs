@@ -42,6 +42,7 @@ public class CSVtoScriptableObjects
             skill.critChance = float.Parse(splitData[6]);
             skill.recoilDamage = float.Parse(splitData[7]);
             skill.cost = float.Parse(splitData[8]);
+            skill.hasAoe = bool.Parse(splitData[9]);
 
             //Creates the skill scriptable object as a new assets inside of its respective folder
             AssetDatabase.CreateAsset(skill, $"Assets/Scriptable Objects/Skills/{skill.skillName}.asset");

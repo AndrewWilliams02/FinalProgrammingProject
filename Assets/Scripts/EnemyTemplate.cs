@@ -20,4 +20,6 @@ public class EnemyTemplate : ScriptableObject
     public float critChance;
     [Tooltip("Currecny gain")]
     public float money;
+    [Tooltip("Experience gain")]
+    public int exp;
 }

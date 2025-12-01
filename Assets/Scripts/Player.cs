@@ -12,6 +12,14 @@ public class Player : MonoBehaviour
     public TextMeshProUGUI moneyText;
     public float money;
 
+    public int exp;
+    [SerializeField] int expNeeded = 50;
+    [SerializeField] float levelModifier = 1.1f;
+    [SerializeField] int level = 1;
+    [SerializeField] TextMeshProUGUI levelText;
+    [SerializeField] TextMeshProUGUI expText;
+    [SerializeField] Slider expBar;
+
     [SerializeField] DataList dataList;
 
     [SerializeField] GameObject stateManager;
@@ -76,6 +84,10 @@ public class Player : MonoBehaviour
         healthText.text = $" HP: {health}";
         moneyText.text = $"${money}";
         UpdateStatText();
+        expBar.maxValue = expNeeded;
+        expBar.value = exp;
+        expText.text = $"{exp}/{expNeeded}";
+        levelText.text = "Level: " + level;
     }
 
     void Update()
@@ -240,6 +252,13 @@ public class Player : MonoBehaviour
         critChance = 0;
         critMultiplier = 0;
         money = 0;
+        exp = 0;
+        expNeeded = 50;
+        level = 1;
+        expBar.maxValue = expNeeded;
+        expBar.value = exp;
+        expText.text = $"{exp}/{expNeeded}";
+        levelText.text = "Level: " + level;
 
         transform.position = new Vector3(-4, 0, 0);
         playerUI.SetActive(true);
@@ -496,5 +515,25 @@ public class Player : MonoBehaviour
                 }
                 return;
         }
+    }
+
+    public void AddExperience(int amount)
+    {
+        exp += amount;
+        UpdatedExperienceBar();
+    }
+
+    void UpdatedExperienceBar()
+    {
+        if (exp >= expNeeded)
+        {
+            exp -= expNeeded;
+            expNeeded = (int)Mathf.Round(expNeeded * levelModifier);
+            level++;
+        }
+        expBar.maxValue = expNeeded;
+        expBar.value = exp;
+        expText.text = $"{exp}/{expNeeded}";
+        levelText.text = "Level: " + level;
     }
 }

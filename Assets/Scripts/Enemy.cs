@@ -8,6 +8,7 @@ public class Enemy : MonoBehaviour
 {
     //Variables to handle enemy stats
     float money, health, critChance, attackAccuracy;
+    int exp;
     Vector2 attackDamage;
     string enemyName;
 
@@ -74,6 +75,7 @@ public class Enemy : MonoBehaviour
         attackDamage = new Vector2(Mathf.Round(enemy.attackDamage.x * modifier * 10) / 10, Mathf.Round(enemy.attackDamage.y * modifier * 10) / 10);
         enemyName = enemy.name;
         money = enemy.money;
+        exp = enemy.exp;
 
         //Sets the values to the healthbar using the enemy's health stats
         healthBar.minValue = 0;
@@ -93,6 +95,7 @@ public class Enemy : MonoBehaviour
             controller.RemoveEnemy(gameObject);
             Player playerScript = player.GetComponent<Player>();
             playerScript.AddMoney(money);
+            playerScript.AddExperience(exp);
             Destroy(gameObject);
         }
     }

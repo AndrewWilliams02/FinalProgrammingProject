@@ -19,3 +19,4 @@ MonoBehaviour:
   attackAccuracy: 0.9
   critChance: 0.15
   money: 40
+  exp: 34

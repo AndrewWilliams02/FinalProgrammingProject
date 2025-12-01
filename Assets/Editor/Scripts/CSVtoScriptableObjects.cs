@@ -75,6 +75,7 @@ public class CSVtoScriptableObjects
             enemy.attackAccuracy = float.Parse(splitData[5]);
             enemy.critChance = float.Parse(splitData[6]);
             enemy.money = float.Parse(splitData[7]);
+            enemy.exp = int.Parse(splitData[8]);
 
             AssetDatabase.CreateAsset(enemy, $"Assets/Scriptable Objects/Enemies/{enemy.enemyName}.asset");
             dataList.allEnemies.Add(enemy);

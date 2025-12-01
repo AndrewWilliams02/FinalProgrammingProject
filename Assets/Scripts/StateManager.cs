@@ -45,6 +45,7 @@ public class StateManager : MonoBehaviour
         if (battleStage % 3 == 0)
         {
             StartResting();
+            player.SendMessage("UpdateStatsInfo");
         }
         else
         {

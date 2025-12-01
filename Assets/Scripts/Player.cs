@@ -13,12 +13,19 @@ public class Player : MonoBehaviour
     public float money;
 
     public int exp;
-    [SerializeField] int expNeeded = 50;
+    [SerializeField] int expNeeded = 75;
     [SerializeField] float levelModifier = 1.1f;
     [SerializeField] int level = 1;
     [SerializeField] TextMeshProUGUI levelText;
     [SerializeField] TextMeshProUGUI expText;
     [SerializeField] Slider expBar;
+
+    public int statPoints = 0;
+    [SerializeField] int statPointsPerLevel = 3;
+    int strength = 0, vitality = 0, luck = 0;
+    [SerializeField] float strMod = 0.05f, vitMod = 0.05f, lckMod = 0.05f;
+    [SerializeField] TextMeshProUGUI statInvest;
+    [SerializeField] TextMeshProUGUI statPointsText;
 
     [SerializeField] DataList dataList;
 
@@ -88,6 +95,7 @@ public class Player : MonoBehaviour
         expBar.value = exp;
         expText.text = $"{exp}/{expNeeded}";
         levelText.text = "Level: " + level;
+        UpdateStatsInfo();
     }
 
     void Update()
@@ -235,8 +243,14 @@ public class Player : MonoBehaviour
         weaponSlot = null;
         armorSlot = null;
         ringSlot = null;
+        statPoints = 0;
+        strength = 0;
+        vitality = 0;
+        luck = 0;
+        statPoints = 0;
         UpdateBonuses();
         UpdateStats();
+        UpdateStatsInfo();
 
         currentSkills[0] = dataList.allSkills[0];
         currentSkills[1] = dataList.allSkills[0];
@@ -374,14 +388,15 @@ public class Player : MonoBehaviour
 
     void UpdateStats()
     {
-        maxHealth = Mathf.Round((100 + flatHP) * (1 + percentHp) * 10) / 10;
-        damage = (0 + flatDamage) * (1 + percentDamage);
-        damageReduction = (0 + flatDamageRed) * (1 + percentDamageRed);
-        critChance = 0 + critChanceBonus;
-        regeneration = 0 + regeneration;
-        critMultiplier = 0 + critMultiplierBonus;
+        maxHealth = Mathf.Round((100 + flatHP + (0.5f * vitality)) * (1 + percentHp) * (1 + (vitality * vitMod)) * 10) / 10;
+        damage = Mathf.Round((0 + flatDamage + (0.25f * strength)) * (1 + percentDamage) * (1 + (strength * strMod)) * 10) / 10;
+        damageReduction = Mathf.Round((0 + flatDamageRed + (0.01f * vitality)) * (1 + percentDamageRed) * (1 + (vitality * vitMod)) * 10) / 10;
+        critChance = Mathf.Round((0 + critChanceBonus + (0.01f * luck)) * (1 + (luck * lckMod)) * 10) / 10;
+        regeneration = Mathf.Round((0 + regeneration + (0.25f * vitality)) * (1 + (vitality * vitMod)) * 10) / 10;
+        critMultiplier = Mathf.Round((0 + critMultiplierBonus + (0.01f * luck)) * (1 + (luck * lckMod)) * 10) / 10;
         damageAppliedMult = 1f;
         ResetHealth();
+        UpdateStatText();
     }
 
     public void UpdateStatText()
@@ -525,15 +540,50 @@ public class Player : MonoBehaviour
 
     void UpdatedExperienceBar()
     {
-        if (exp >= expNeeded)
+        while (exp >= expNeeded)
         {
             exp -= expNeeded;
             expNeeded = (int)Mathf.Round(expNeeded * levelModifier);
             level++;
+            statPoints += statPointsPerLevel;
         }
         expBar.maxValue = expNeeded;
         expBar.value = exp;
         expText.text = $"{exp}/{expNeeded}";
         levelText.text = "Level: " + level;
+    }
+
+    public void IncreaseStat(int stat)
+    {
+        if (statPoints - 1 >= 0)
+        {
+            switch (stat)
+            {
+                case 0:
+                    strength++;
+                    statPoints--;
+                    UpdateStatsInfo();
+                    UpdateStats();
+                    return;
+                case 1:
+                    vitality++;
+                    statPoints--;
+                    UpdateStatsInfo();
+                    UpdateStats();
+                    return;
+                case 2:
+                    luck++;
+                    statPoints--;
+                    UpdateStatsInfo();
+                    UpdateStats();
+                    return;
+            }
+        }
+    }
+
+    public void UpdateStatsInfo()
+    {
+        statInvest.text = $"STR: {strength}\nVIT: {vitality}\nLCK: {luck}";
+        statPointsText.text = "Stat Points: " + statPoints;
     }
 }

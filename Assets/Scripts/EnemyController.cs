@@ -92,4 +92,9 @@ public class EnemyController : MonoBehaviour
     {
         difficultyModifier *= modifier;
     }
+
+    public void ResetDifficulty()
+    {
+        difficultyModifier = 1f;
+    }
 }

@@ -157,9 +157,8 @@ public class Player : MonoBehaviour
             {
                 targets[i].SendMessage("ApplyDamage", 1000000f);
             }
-            ResetPlayer();
             playerUI.SetActive(false);
-            transform.position = new Vector3(4, 100, 0);
+            transform.position = new Vector3(-4, 100, 0);
             stateManager.SendMessage("GameOver");
         }
     }
@@ -212,6 +211,26 @@ public class Player : MonoBehaviour
         ringSlot = null;
         UpdateBonuses();
         UpdateStats();
+
+        currentSkills[0] = dataList.allSkills[0];
+        currentSkills[1] = null;
+        currentSkills[2] = null;
+        currentSkills[3] = null;
+        UpdateSkills();
+
+        maxHealth = 100;
+        health = maxHealth;
+        damage = 0;
+        damageReduction = 0;
+        regeneration = 0;
+        critChance = 0;
+        critMultiplier = 0;
+        money = 0;
+
+        transform.position = new Vector3(-4, 0, 0);
+        playerUI.SetActive(true);
+        healthBar.value = health;
+        healthText.text = $" HP: {health}";
     }
 
     public void EquipItem(Item item)

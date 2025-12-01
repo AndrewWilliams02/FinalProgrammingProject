@@ -31,6 +31,7 @@ public class StateManager : MonoBehaviour
     public void GameOver()
     {
         SetState(false, false, true, false);
+        battleStage = 0;
     }
 
     public void PostFight()
@@ -48,6 +49,15 @@ public class StateManager : MonoBehaviour
         {
             StartBattle();
         }
+    }
+
+    public void RestartGame()
+    {
+        StartBattle();
+        player.SendMessage("ResetPlayer");
+        enemyController.SendMessage("ResetDifficulty");
+        enemyController.SendMessage("GenerateEnemies");
+        turnManager.SendMessage("EnablePlayerTurn");
     }
 
     void SetState(bool state1, bool state2, bool state3, bool state4)

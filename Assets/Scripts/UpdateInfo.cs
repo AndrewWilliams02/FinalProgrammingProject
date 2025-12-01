@@ -1,6 +1,7 @@
 using TMPro;
 using UnityEngine;
 
+//Script that updates the name of a skill on the action selection button
 public class UpdateInfo : MonoBehaviour
 {
     [SerializeField] TextMeshProUGUI text;

@@ -4,6 +4,7 @@ using UnityEngine.VFX;
 
 public class EnemyController : MonoBehaviour
 {
+    //Variable that modifies enemy stats
     float difficultyModifier = 1f;
 
     [SerializeField] DataList dataList;
@@ -17,6 +18,7 @@ public class EnemyController : MonoBehaviour
 
     private void Awake()
     {
+        //Set the list of possible enemy types from the data list of all enemies
         enemyType = dataList.allEnemies;
     }
 
@@ -25,9 +27,10 @@ public class EnemyController : MonoBehaviour
         player = GameObject.Find("Player");
         turnManager = GameObject.Find("TurnManager");
         stateManager = GameObject.Find("State Manager");
-        GenerateEnemies();
+        GenerateEnemies(); //Spawns first set of enemies
     }
 
+    //Script that generates 1-3 enemies to spawn
     void GenerateEnemies()
     {
         int enemyNum = Random.Range(1, 4);
@@ -61,6 +64,7 @@ public class EnemyController : MonoBehaviour
         UpdateLists();
         //Debug.Log("Removed Enemy");
 
+        //Checks if all enemies are dead and starts the post-fight rewards state if so
         if (enemies.Count <= 0)
         {
             StateManager stateManagerScript = stateManager.GetComponent<StateManager>();
@@ -77,6 +81,7 @@ public class EnemyController : MonoBehaviour
         turnManagerScript.UpdateEnemies(enemies);
     }
 
+    //Function that creates new enemies with a random type
     void CreateEnemy(int index)
     {
         GameObject newEnemy = Instantiate(enemyPrefab, spawners[index].transform.position, Quaternion.identity);
@@ -88,11 +93,13 @@ public class EnemyController : MonoBehaviour
         UpdateLists();
     }
 
+    //Function that increases the modifier for enemy stats
     public void IncreaseDifficulty(float modifier)
     {
         difficultyModifier *= modifier;
     }
 
+    //Function to reset the modifier for enemy stats
     public void ResetDifficulty()
     {
         difficultyModifier = 1f;

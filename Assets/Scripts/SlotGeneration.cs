@@ -11,10 +11,12 @@ public class SlotGeneration : MonoBehaviour
     [SerializeField] TextMeshProUGUI buttonText;
     [SerializeField] GameObject skillSlotUI;
 
+    //Varables to track the random skill or item being generated in a shop slot
     public Item randomItem;
     public Skills randomSkill;
-    public float healModifier;
-    public int randomReward;
+
+    public float healModifier; //Variable to track the % of hp the player heals
+    public int randomReward; //Variable that randomizes which data type shows up in the reward slot (item, skill, or heal)
 
     private void Awake()
     {
@@ -22,15 +24,18 @@ public class SlotGeneration : MonoBehaviour
         state = stateManager.GetComponent<StateManager>();
     }
 
+    //When the gameobject becomes enabled, randomize the reward slot
     private void OnEnable()
     {
         RandomizeSlot();
     }
 
+    //Function that randomizes the data in the current reward slot
     void RandomizeSlot()
     {
-        randomReward = Random.Range(0, 5);
+        randomReward = Random.Range(0, 5); //Picks a random data type integer (item, skill, or heal)
 
+        //Switch statement that sets the data type and displays said types name or value
         switch (randomReward)
         {
             case 0:
@@ -57,6 +62,7 @@ public class SlotGeneration : MonoBehaviour
         }
     }
 
+    //Function that equips the item/skill to the player or heals them depending on random integer
     public void SelectSlot()
     {
         switch (randomReward)
@@ -70,10 +76,10 @@ public class SlotGeneration : MonoBehaviour
                 state.RewardSelected();
                 return;
             case 2:
-                skillSlotUI.SetActive(true);
+                skillSlotUI.SetActive(true); //Displays UI to decide which slot skill will go into
                 return;
             case 3:
-                skillSlotUI.SetActive(true);
+                skillSlotUI.SetActive(true); 
                 return;
             case 4:
                 playerScript.Rest(healModifier);
@@ -82,6 +88,7 @@ public class SlotGeneration : MonoBehaviour
         }
     }
 
+    //Function that replaces the current skill in a slot with the newly selected skill
     public void ReplaceSkill(int slot)
     {
         playerScript.currentSkills[slot] = randomSkill;

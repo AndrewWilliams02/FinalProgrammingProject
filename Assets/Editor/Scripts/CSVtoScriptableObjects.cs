@@ -5,9 +5,10 @@ using UnityEngine;
 
 public class CSVtoScriptableObjects
 {
-    private static string enemyCSVPath = "/Editor/CSVs/Enemies.csv", skillCSVPath = "/Editor/CSVs/Skills.csv", itemCSVPath = "/Editor/CSVs/Items.csv";
-    private const string dataListPath = "Assets/Scriptable Objects/DataList.asset";
+    private static string enemyCSVPath = "/Editor/CSVs/Enemies.csv", skillCSVPath = "/Editor/CSVs/Skills.csv", itemCSVPath = "/Editor/CSVs/Items.csv"; //String paths for CSV files
+    private const string dataListPath = "Assets/Scriptable Objects/DataList.asset"; //String path for the data list housing all created assets
 
+    //Function that returns the data list from said path if found
     private static DataList GetDataList()
     {
         DataList dl = AssetDatabase.LoadAssetAtPath<DataList>(dataListPath);
@@ -19,12 +20,12 @@ public class CSVtoScriptableObjects
     [MenuItem("Generation/Generate Skills")] //Ceates a new selection under the "Generation" tab in the unity editor to generate skills
     public static void GenerateSkills()
     {
-        DataList dataList = GetDataList();
+        DataList dataList = GetDataList(); //Calls for data list refrence
 
         //Gets each line from the skills CSV file and seperates them into an array
         string[] allLines = File.ReadAllLines(Application.dataPath + skillCSVPath);
 
-        dataList.allSkills.Clear();
+        dataList.allSkills.Clear(); //Clears previous list of skills
 
         //Loop that skips the first line of the CSV file (since they are headers) and creates a new scriptable object per line in the CSV
         for (int i = 1; i < allLines.Length; i++)
@@ -46,10 +47,10 @@ public class CSVtoScriptableObjects
 
             //Creates the skill scriptable object as a new assets inside of its respective folder
             AssetDatabase.CreateAsset(skill, $"Assets/Scriptable Objects/Skills/{skill.skillName}.asset");
-            dataList.allSkills.Add(skill);
+            dataList.allSkills.Add(skill); //Adds the current skill to the skill list in the data list
         }
         //Saves the assets
-        EditorUtility.SetDirty(dataList);
+        EditorUtility.SetDirty(dataList); //Overwrites the data list
         AssetDatabase.SaveAssets();
     }
 

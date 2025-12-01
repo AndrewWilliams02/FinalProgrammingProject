@@ -12,11 +12,11 @@ public class Enemy : MonoBehaviour
     Vector2 attackDamage;
     string enemyName;
 
-    GameObject player, enemyController;
-
     [SerializeField] Slider healthBar;
     [SerializeField] TextMeshProUGUI healthText;
     [SerializeField] TextMeshProUGUI nameplate;
+
+    GameObject player, enemyController;
 
     void Start()
     {
@@ -31,7 +31,7 @@ public class Enemy : MonoBehaviour
         healthText.text = $" HP: {health}";
     }
 
-    //Function that 
+    //Function that when called, attacks the player
     void AttackPlayer()
     {
         //Sets the variables needed for damage
@@ -66,6 +66,7 @@ public class Enemy : MonoBehaviour
         Kill();
     }
 
+    //Function that randomizes the enemy type & stats
     public void RandomizeEnemy(EnemyTemplate enemy, float modifier)
     {
         //Initialize enemy stats from scriptable object

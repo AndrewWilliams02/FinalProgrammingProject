@@ -7,20 +7,21 @@ using static UnityEditor.Progress;
 
 public class Player : MonoBehaviour
 {
-    public TextMeshProUGUI[] equipmentText = new TextMeshProUGUI[3];
-    public TextMeshProUGUI statsText;
-    public TextMeshProUGUI moneyText;
-    public float money;
+    //Variables handling money
+    [SerializeField] TextMeshProUGUI moneyText;
+    float money;
 
-    public int exp;
+    //Variables handling levels and experience
+    int exp;
     [SerializeField] int expNeeded = 75;
     [SerializeField] float levelModifier = 1.1f;
-    [SerializeField] int level = 1;
+    int level = 1;
     [SerializeField] TextMeshProUGUI levelText;
     [SerializeField] TextMeshProUGUI expText;
     [SerializeField] Slider expBar;
 
-    public int statPoints = 0;
+    //Variables handling stat point investment
+    int statPoints = 0;
     [SerializeField] int statPointsPerLevel = 3;
     int strength = 0, vitality = 0, luck = 0;
     [SerializeField] float strMod = 0.05f, vitMod = 0.05f, lckMod = 0.05f;
@@ -33,36 +34,39 @@ public class Player : MonoBehaviour
     [SerializeField] GameObject playerUI;
     [SerializeField] GameObject targetIndicator;
 
+    //Variables handling equipment and stats
+    [SerializeField] TextMeshProUGUI[] equipmentText = new TextMeshProUGUI[3];
     [SerializeField] GameObject[] equipmentInfo = new GameObject[3];
     [SerializeField] TextMeshProUGUI[] equipmentInfoText = new TextMeshProUGUI[3];
     bool[] infoVisible = new bool[3];
 
+    //Variables handling skill slots
     [SerializeField] GameObject[] skillSlots = new GameObject[4];
     public Skills[] currentSkills = new Skills[4];
     [SerializeField] Item weaponSlot, armorSlot, ringSlot;
 
-    float health; //Players current health
+    //Variables handing player stats
+    float health;
     float maxHealth = 100;
     float damage = 0;
     float damageReduction = 0;
     float regeneration = 0;
     float critChance = 0;
     float critMultiplier = 0;
+    [SerializeField] TextMeshProUGUI statsText;
+    [SerializeField] Slider healthBar;
+    [SerializeField] TextMeshProUGUI healthText;
+    [SerializeField] float damageAppliedMult = 1f;
 
-    int targetIndex = 0;
-
+    //Variables handing player bonuses
     float flatHP, percentHp;
     float flatDamage, percentDamage;
     float flatDamageRed, percentDamageRed;
     float critChanceBonus, critMultiplierBonus;
 
-    [SerializeField] Slider healthBar;
-    [SerializeField] TextMeshProUGUI healthText;
-
-    [SerializeField] float damageAppliedMult = 1f;
-
-    [SerializeField] GameObject currentTarget; //The current enemy targetted by player
-
+    //Variables handling player targetting
+    [SerializeField] GameObject currentTarget;
+    int targetIndex = 0;
     public List<GameObject> targets = new List<GameObject>(); //Handles all enemies
 
     void Awake()
@@ -83,7 +87,6 @@ public class Player : MonoBehaviour
 
     void Start()
     {
-        //Sets the values to the healthbar using the players health stats
         health = maxHealth;
         healthBar.minValue = 0;
         UpdateHealthBar();
@@ -100,8 +103,7 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        
-
+        //Changes player target if space is click (cycles)
         if (Input.GetKeyDown(KeyCode.Space))
         {
             CycleTarget();
@@ -141,6 +143,8 @@ public class Player : MonoBehaviour
                 if (accuracyCheck <= accuracyTemp) //Checks if the player hits the enemy according to the current skills accuracy
                 {
                     if (recoilDamage != 0) { health -= recoilDamage; } //Deals self damage to the player if the skill has recoil
+
+                    //Checks if attack is an AOE attack and hits all enemies if so
                     if (skill.hasAoe)
                     {
                         for (int j = targets.Count - 1; j >= 0; j--)
@@ -155,17 +159,13 @@ public class Player : MonoBehaviour
                 }
                 else
                 {
-                    Debug.Log("Attack Missed!");
+                    //Debug.Log("Attack Missed!");
                 }
             }
         }
-        else
-        {
-            Debug.Log("No Skill Equipped");
-        }
     }
 
-    //Reduces damage of next attack by 50%
+    //Reduces damage of next attack by 50% and heal between 0-10 hp
     public void Defend()
     {
         damageAppliedMult = 0.5f;
@@ -185,6 +185,7 @@ public class Player : MonoBehaviour
 
         damageAppliedMult = 1; //Resets damage applied multiplier
 
+        //Checks if the player is dead, then kills all alive enemies and starts game over state if so
         if (health <= 0)
         {
             for (int i = targets.Count - 1; i >= 0; i--) 
@@ -209,17 +210,20 @@ public class Player : MonoBehaviour
         }
     }
 
+    //Function to heal player health per turn
     public void RegenHealth()
     {
         Heal(new Vector2 (regeneration, regeneration));
     }
 
+    //Function that heals the player by a % of their health
     public void Rest(float modifier)
     {
         float heal = maxHealth * modifier;
         Heal(new Vector2(heal, heal));
     }
 
+    //Function that resets the players health if it exceeds the maximum
     void ResetHealth()
     {
         if (health > maxHealth)
@@ -228,6 +232,7 @@ public class Player : MonoBehaviour
         }
     }
 
+    //Function that heals the player between a minimum and maximum amount
     public void Heal(Vector2 amount)
     {
         float healAmount = Random.Range(amount.x, amount.y);
@@ -238,6 +243,7 @@ public class Player : MonoBehaviour
         healthText.text = $" HP: {health}";
     }
 
+    //Function that resets all player states and variables back to their initial state
     public void ResetPlayer()
     {
         weaponSlot = null;
@@ -280,8 +286,10 @@ public class Player : MonoBehaviour
         healthText.text = $" HP: {health}";
     }
 
+    //Function that equips items
     public void EquipItem(Item item)
     {
+        //Chekcs the item type and then equips it to its respective slot and updates stats
         if (item.itemType == ItemType.Weapon)
         {
             weaponSlot = item;
@@ -308,6 +316,7 @@ public class Player : MonoBehaviour
         }
     }
 
+    //Functions that updates the bonuses to stats for each equipment item combined
     void UpdateBonuses()
     {
         if (weaponSlot != null)
@@ -386,8 +395,10 @@ public class Player : MonoBehaviour
         }
     }
 
+    //Function that updates the players stats influenced by stat bonuses from equipment and stat point investments
     void UpdateStats()
     {
+        //Variables are reset on update depending on base stats + bonuses * bonus percentages and rounded to the nearest tenth
         maxHealth = Mathf.Round((100 + flatHP + (0.5f * vitality)) * (1 + percentHp) * (1 + (vitality * vitMod)) * 10) / 10;
         damage = Mathf.Round((0 + flatDamage + (0.25f * strength)) * (1 + percentDamage) * (1 + (strength * strMod)) * 10) / 10;
         damageReduction = Mathf.Round((0 + flatDamageRed + (0.01f * vitality)) * (1 + percentDamageRed) * (1 + (vitality * vitMod)) * 10) / 10;
@@ -404,6 +415,7 @@ public class Player : MonoBehaviour
         statsText.text = $"Max HP: {maxHealth}\nRegeneration: {regeneration}/turn\nDamage Bonus: {damage}\nDamage Reduction: {damageReduction}%\nCrit Chance Bonus: {critChance}%\nCrit Multiplier Bonus: {critMultiplier}";
     }
 
+    //Function that cycles the players current target through the list of all targets
     void CycleTarget()
     {
         if (targets.Count > 1)
@@ -414,6 +426,7 @@ public class Player : MonoBehaviour
         }
     }
 
+    //Function that updates the position of the targetting indicator
     void UpdateTargetIndicator()
     {
         Vector3 currentPos = targetIndicator.transform.position;
@@ -421,6 +434,7 @@ public class Player : MonoBehaviour
         targetIndicator.transform.position = currentPos;
     }
 
+    //Function that will uodate the skill slots on the player with the current data
     public void UpdateSkills()
     {
         for(int i = 0; i < currentSkills.Length; i++)
@@ -433,6 +447,7 @@ public class Player : MonoBehaviour
         }
     }
 
+    //Function that checks if the player is able to buy an item/skill and returns a boolean to decide if the purchase goes through
     public bool CanBuy(float amount)
     {
         if (money-amount >= 0)
@@ -448,17 +463,21 @@ public class Player : MonoBehaviour
         }
     }
 
+    //Function that adds money to the player
     public void AddMoney(float amount)
     {
         money += amount;
         moneyText.text = $"${money}";
     }
 
+    //Function that displays a panel highlightingan items information
     public void DisplayEquipmentInfo(int slot)
     {
+        //Switch statement that checks which item slot the panel is supposed to display
         switch (slot)
         {
             case 0:
+                //Checks if the items panel is already showing and if there is an item equipped, if so the items info is displayed
                 if (!infoVisible[slot] && weaponSlot != null)
                 {
                     string text = "";
@@ -477,6 +496,7 @@ public class Player : MonoBehaviour
                     infoVisible[slot] = true;
                 } else
                 {
+                    //If there is no item equipped or the items info is already displayer, hides panel
                     infoVisible[slot] = false;
                     equipmentInfo[slot].SetActive(false);
                 }
@@ -532,16 +552,20 @@ public class Player : MonoBehaviour
         }
     }
 
+    //Function that adds experience to the player
     public void AddExperience(int amount)
     {
         exp += amount;
         UpdatedExperienceBar();
     }
 
+    //Function that updates experience bar while chekcing level up requirement
     void UpdatedExperienceBar()
     {
+        //While statement that runs as long as the players exp exceeds the exp needed to level up
         while (exp >= expNeeded)
         {
+            //Each iteration the players exp is reduced by the exp needed for the level and the level and stat points of the player increases
             exp -= expNeeded;
             expNeeded = (int)Mathf.Round(expNeeded * levelModifier);
             level++;
@@ -553,6 +577,7 @@ public class Player : MonoBehaviour
         levelText.text = "Level: " + level;
     }
 
+    //Function to invest stat points
     public void IncreaseStat(int stat)
     {
         if (statPoints - 1 >= 0)
@@ -581,6 +606,7 @@ public class Player : MonoBehaviour
         }
     }
 
+    //Function to update info for stat investments
     public void UpdateStatsInfo()
     {
         statInvest.text = $"STR: {strength}\nVIT: {vitality}\nLCK: {luck}";

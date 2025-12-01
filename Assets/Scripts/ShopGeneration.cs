@@ -10,9 +10,11 @@ public class ShopGeneration : MonoBehaviour
     [SerializeField] GameObject purchaseButton;
     [SerializeField] GameObject skillSlotUI;
 
+    //Varables to track the random skill or item being generated in a shop slot
     public Item randomItem;
     public Skills randomSkill;
-    public int randomMerch;
+
+    public int randomMerch; //Variable that randomizes which data type shows up in the shop (item or skill)
     float cost;
 
     private void Awake()
@@ -20,16 +22,19 @@ public class ShopGeneration : MonoBehaviour
         playerScript = player.GetComponent<Player>();
     }
 
+    //When the gameobject becomes enabled, randomize the shop slot and re-enables buy button
     private void OnEnable()
     {
         RandomizeSlot();
         purchaseButton.SetActive(true);
     }
 
+    //Function that randomizes the data in the current shop slot
     void RandomizeSlot()
     {
-        randomMerch = Random.Range(0, 2);
+        randomMerch = Random.Range(0, 2); //Picks a random data type integer (item or skill)
 
+        //Switch statement that sets the data type and displays said types name and cost
         switch (randomMerch)
         {
             case 0:
@@ -47,6 +52,7 @@ public class ShopGeneration : MonoBehaviour
         }
     }
 
+    //Function that equips the item or skill to the player if the cost requirement is met
     public void Buy()
     {
         if (playerScript.CanBuy(cost))
@@ -59,12 +65,13 @@ public class ShopGeneration : MonoBehaviour
                     return;
                 case 1:
                     purchaseButton.SetActive(false);
-                    skillSlotUI.SetActive(true);
+                    skillSlotUI.SetActive(true); //Displays UI to decide which slot skill will go into
                     return;
             }
         }
     }
 
+    //Function that replaces the current skill in a slot with the newly bought skill
     public void ReplaceSkill(int slot)
     {
         playerScript.currentSkills[slot] = randomSkill;

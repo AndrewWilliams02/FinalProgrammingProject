@@ -10450,21 +10450,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b13772c03d45a6e44bb27b10ef1062dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Player
-  equipmentText:
-  - {fileID: 532215678}
-  - {fileID: 142383598}
-  - {fileID: 514005900}
-  statsText: {fileID: 868425635}
   moneyText: {fileID: 497051772}
-  money: 0
-  exp: 0
   expNeeded: 75
   levelModifier: 1.2
-  level: 1
   levelText: {fileID: 226626453}
   expText: {fileID: 154712950}
   expBar: {fileID: 1324581431}
-  statPoints: 0
   statPointsPerLevel: 3
   strMod: 0.05
   vitMod: 0.05
@@ -10475,6 +10466,10 @@ MonoBehaviour:
   stateManager: {fileID: 457245712}
   playerUI: {fileID: 491258554}
   targetIndicator: {fileID: 40924968}
+  equipmentText:
+  - {fileID: 532215678}
+  - {fileID: 142383598}
+  - {fileID: 514005900}
   equipmentInfo:
   - {fileID: 436841780}
   - {fileID: 1505364311}
@@ -10496,6 +10491,8 @@ MonoBehaviour:
   weaponSlot: {fileID: 0}
   armorSlot: {fileID: 0}
   ringSlot: {fileID: 0}
+  regeneration: 0
+  statsText: {fileID: 868425635}
   healthBar: {fileID: 781950000}
   healthText: {fileID: 1369524400}
   damageAppliedMult: 1
@@ -12314,6 +12311,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TurnManager
   ui: {fileID: 1954332886}
+  player: {fileID: 904185134}
 --- !u!1 &1215953749
 GameObject:
   m_ObjectHideFlags: 0

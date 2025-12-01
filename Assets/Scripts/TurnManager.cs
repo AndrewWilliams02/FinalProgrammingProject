@@ -8,8 +8,9 @@ public class TurnManager : MonoBehaviour
 {
     List<GameObject> enemies;
     [SerializeField] GameObject ui;
+    [SerializeField] GameObject player;
 
-    //Coroutine that cycles through alive enemies turns with pauses inbetween
+    //Coroutine that cycles through alive enemies turns with pauses inbetween then sets the players turn and regens their health
     private IEnumerator EnemyTurn()
     {
         yield return new WaitForSeconds(0.75f); //Waits 0.75 seconds before enemy turns
@@ -21,6 +22,7 @@ public class TurnManager : MonoBehaviour
             yield return new WaitForSeconds(0.75f);
         }
 
+        player.SendMessage("RegenHealth");
         EnablePlayerTurn();
     }
 
@@ -43,6 +45,7 @@ public class TurnManager : MonoBehaviour
         enemies = aliveEnemies;
     }
 
+    //Function that enables the players battle UI
     public void EnablePlayerTurn()
     {
         if (ui.activeInHierarchy)

@@ -29,7 +29,7 @@ public class SlotGeneration : MonoBehaviour
 
     void RandomizeSlot()
     {
-        randomReward = Random.Range(0, 3);
+        randomReward = Random.Range(0, 5);
 
         switch (randomReward)
         {
@@ -58,9 +58,16 @@ public class SlotGeneration : MonoBehaviour
                 state.RewardSelected();
                 return;
             case 1:
-                skillSlotUI.SetActive(true);
+                playerScript.EquipItem(randomItem);
+                state.RewardSelected();
                 return;
             case 2:
+                skillSlotUI.SetActive(true);
+                return;
+            case 3:
+                skillSlotUI.SetActive(true);
+                return;
+            case 4:
                 playerScript.Rest(healModifier);
                 state.RewardSelected();
                 return;

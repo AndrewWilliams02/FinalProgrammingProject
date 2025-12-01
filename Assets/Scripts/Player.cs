@@ -249,7 +249,7 @@ public class Player : MonoBehaviour
             UpdateBonuses();
             UpdateStats();
             equipmentText[1].text = item.name;
-            equipmentText[0].color = Color.green;
+            equipmentText[1].color = Color.green;
         }
         else if (item.itemType == ItemType.Ring)
         {
@@ -257,7 +257,7 @@ public class Player : MonoBehaviour
             UpdateBonuses();
             UpdateStats();
             equipmentText[2].text = item.name;
-            equipmentText[0].color = Color.green;
+            equipmentText[2].color = Color.green;
         }
     }
 
@@ -353,7 +353,7 @@ public class Player : MonoBehaviour
 
     public void UpdateStatText()
     {
-        statsText.text = $"Max HP: {maxHealth}\nRegeneration: {regeneration}/turn\nDamage Bonus: +{damage}\nDamage Reduction: {damageReduction}%\nCrit Chance Bonus: +{critChance}%\nCrit Multiplier Bonus: +{critMultiplier}";
+        statsText.text = $"Max HP: {maxHealth}\nRegeneration: {regeneration}/turn\nDamage Bonus: {damage}\nDamage Reduction: {damageReduction}%\nCrit Chance Bonus: {critChance}%\nCrit Multiplier Bonus: {critMultiplier}";
     }
 
     void CycleTarget()

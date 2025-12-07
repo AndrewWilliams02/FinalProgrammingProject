@@ -71,7 +71,7 @@ public class Player : MonoBehaviour
     int targetIndex = 0;
     public List<GameObject> targets = new List<GameObject>(); //Handles all enemies
 
-    Animator animator;
+    public Animator animator;
 
     void Awake()
     {
@@ -133,6 +133,7 @@ public class Player : MonoBehaviour
 
     private IEnumerator AttackEnemy(AttackAction skill)
     {
+        Animator eAnimator;
         Vector3 originalPos = transform.position;
         Vector3 pos = new Vector3(currentTarget.transform.position.x - 1, currentTarget.transform.position.y, currentTarget.transform.position.x);
         transform.position = pos;
@@ -167,11 +168,17 @@ public class Player : MonoBehaviour
                     {
                         for (int j = targets.Count - 1; j >= 0; j--)
                         {
+                            eAnimator = targets[j].GetComponent<Animator>();
+                            string name = targets[j].GetComponent<Enemy>().enemyName;
+                            eAnimator.Play(name+"_Hurt");
                             targets[j].SendMessage("ApplyDamage", totalDamage);
                         }
                     }
                     else
                     {
+                        eAnimator = currentTarget.GetComponent<Animator>();
+                        string name = currentTarget.GetComponent<Enemy>().enemyName;
+                        eAnimator.Play(name + "_Hurt");
                         currentTarget.SendMessage("ApplyDamage", totalDamage); //Calls the "Apply Damage" function on the current enemy target and deals the total damage of the skill
                     }
                 }
@@ -185,6 +192,22 @@ public class Player : MonoBehaviour
         yield return new WaitForSeconds(0.2f);
         transform.position = originalPos;
         animator.Play("Player_Idle");
+        yield return new WaitForSeconds(0.3f);
+        if (skill.hasAoe && targets != null && currentTarget != null)
+        {
+            for (int j = targets.Count - 1; j >= 0; j--)
+            {
+                eAnimator = targets[j].GetComponent<Animator>();
+                string name = targets[j].GetComponent<Enemy>().enemyName;
+                eAnimator.Play(name + "_Idle");
+            }
+        }
+        else if (targets != null && currentTarget != null)
+        {
+            eAnimator = currentTarget.GetComponent<Animator>();
+            string name = currentTarget.GetComponent<Enemy>().enemyName;
+            eAnimator.Play(name + "_Idle");
+        }
     }
 
     //Reduces damage of next attack by 50% and heal between 0-10 hp
@@ -428,6 +451,10 @@ public class Player : MonoBehaviour
         regeneration = Mathf.Round((0 + regeneration + (0.25f * vitality)) * (1 + (vitality * vitMod)) * 10) / 10;
         critMultiplier = Mathf.Round((0 + critMultiplierBonus + (0.01f * luck)) * (1 + (luck * lckMod)) * 10) / 10;
         damageAppliedMult = 1f;
+
+        healthBar.maxValue = maxHealth;
+        healthBar.value = health;
+        healthText.text = $" HP: {health}";
         ResetHealth();
         UpdateStatText();
     }

@@ -31,7 +31,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: a8b0a215402fa4141ae26900e2f82356, type: 2}
   allEnemies:
   - {fileID: 11400000, guid: 7c7f585bade41b2409820b30ff4de02e, type: 2}
-  - {fileID: 11400000, guid: 86551e30cd2f58e4683f75f24cbe7a76, type: 2}
   - {fileID: 11400000, guid: e44e7a4fd34583047bcdd1efc10d2d6e, type: 2}
   - {fileID: 11400000, guid: be21a6f90db437b49a100c2cc137ddd4, type: 2}
   - {fileID: 11400000, guid: b566290fb82d33f479d89883260a085f, type: 2}
@@ -41,7 +40,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 206c9868cb9a4af41ae7d890e1d51779, type: 2}
   - {fileID: 11400000, guid: 14f2f0071dcb2534c9050d211669d085, type: 2}
   - {fileID: 11400000, guid: c07d5a0b9632bca42b64be12eb9c028a, type: 2}
-  - {fileID: 11400000, guid: 9b7d3b8ee4b3f634fbcf24b4478e1c6c, type: 2}
   allSkills:
   - {fileID: 11400000, guid: c0e6d660aaa47354dbe527e8835764c8, type: 2}
   - {fileID: 11400000, guid: acb8908a42e024d428b78e94f0929e80, type: 2}

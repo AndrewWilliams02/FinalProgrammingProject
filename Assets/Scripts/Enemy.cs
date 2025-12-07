@@ -1,8 +1,12 @@
+using System.Collections;
+using System.Collections.Generic;
 using System.Data.SqlTypes;
 using System.Xml.Linq;
 using TMPro;
 using UnityEngine;
+using UnityEngine.U2D;
 using UnityEngine.UI;
+using UnityEditor.Animations;
 
 public class Enemy : MonoBehaviour
 {
@@ -10,16 +14,20 @@ public class Enemy : MonoBehaviour
     float money, health, critChance, attackAccuracy;
     int exp;
     Vector2 attackDamage;
-    string enemyName;
+    public string enemyName;
 
     [SerializeField] Slider healthBar;
     [SerializeField] TextMeshProUGUI healthText;
     [SerializeField] TextMeshProUGUI nameplate;
 
     GameObject player, enemyController;
+    public Animator animator;
+    SpriteRenderer sprite;
 
-    void Start()
+    void Awake()
     {
+        animator = GetComponent<Animator>();
+        sprite = GetComponent<SpriteRenderer>();
         player = GameObject.Find("Player");
         enemyController = GameObject.Find("EnemyController");
     }
@@ -32,8 +40,15 @@ public class Enemy : MonoBehaviour
     }
 
     //Function that when called, attacks the player
-    void AttackPlayer()
+    IEnumerator AttackPlayer()
     {
+        Animator pAnimator = player.GetComponent<Animator>();
+        Vector3 originalPos = transform.position;
+        Vector3 pos = new Vector3(player.transform.position.x + 1, player.transform.position.y, player.transform.position.x);
+        transform.position = pos;
+        animator.Play(enemyName+"_Attack");
+        yield return new WaitForSeconds(0.35f);
+
         //Sets the variables needed for damage
         float damage = Random.Range(attackDamage.x, attackDamage.y);
         float multiplier = 1f;
@@ -48,12 +63,21 @@ public class Enemy : MonoBehaviour
         //Checks if the player hits the enemy according to the current skills accuracy
         if (accuracyCheck <= attackAccuracy)
         {
+            pAnimator.Play("Player_Hurt");
+
             player.SendMessage("ApplyDamage", totalDamage); //Calls the "Apply Damage" function on the player and deals the total attack damage
         }
         else
         {
             Debug.Log($"{enemyName}s Attack Missed!");
         }
+
+        yield return new WaitForSeconds(0.2f);
+        transform.position = originalPos;
+        animator.Play(enemyName + "_Idle");
+        yield return new WaitForSeconds(0.3f);
+        pAnimator.Play("Player_Idle");
+
     }
 
     //Function that applies damage to this enemy when called
@@ -67,7 +91,7 @@ public class Enemy : MonoBehaviour
     }
 
     //Function that randomizes the enemy type & stats
-    public void RandomizeEnemy(EnemyTemplate enemy, float modifier)
+    public void RandomizeEnemy(EnemyTemplate enemy, float modifier, Sprite spr, RuntimeAnimatorController anim)
     {
         //Initialize enemy stats from scriptable object
         health = Mathf.Round(enemy.maxHP * modifier * 10) / 10;
@@ -84,6 +108,11 @@ public class Enemy : MonoBehaviour
         healthBar.value = health;
         healthText.text = $" HP: {health}";
         nameplate.text = enemy.name;
+
+        animator.runtimeAnimatorController = anim;
+        sprite.sprite = spr;
+
+        animator.Play(enemyName + "_Idle");
     }
 
     //Function to delete the enemy on death

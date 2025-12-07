@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEditor.Animations;
 using UnityEngine;
 using UnityEngine.VFX;
 
@@ -15,6 +16,10 @@ public class EnemyController : MonoBehaviour
     List<GameObject> enemies = new List<GameObject>(); //Handles all enemies currently alive
 
     [SerializeField] GameObject[] spawners;
+
+    [SerializeField] RuntimeAnimatorController[] animators;
+    [SerializeField] Sprite[] sprites;
+    
 
     private void Awake()
     {
@@ -84,11 +89,13 @@ public class EnemyController : MonoBehaviour
     //Function that creates new enemies with a random type
     void CreateEnemy(int index)
     {
+        int randomInt = Random.Range(0, enemyType.Count);
+
         GameObject newEnemy = Instantiate(enemyPrefab, spawners[index].transform.position, Quaternion.identity);
         enemies.Add(newEnemy);
-        EnemyTemplate newEnemyType = enemyType[Random.Range(0, enemyType.Count)];
+        EnemyTemplate newEnemyType = enemyType[randomInt];
         Enemy enemyScript = newEnemy.GetComponent<Enemy>();
-        enemyScript.RandomizeEnemy(newEnemyType, difficultyModifier);
+        enemyScript.RandomizeEnemy(newEnemyType, difficultyModifier, sprites[randomInt], animators[randomInt]);
         //Debug.Log($"Spawned {newEnemyType.name}");
         UpdateLists();
     }

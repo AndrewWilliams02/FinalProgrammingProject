@@ -19,7 +19,7 @@ public class TurnManager : MonoBehaviour
         for (int i = 0; i < enemies.Count; i++)
         {
             enemies[i].SendMessage("AttackPlayer");
-            yield return new WaitForSeconds(0.75f);
+            yield return new WaitForSeconds(1f);
         }
 
         player.SendMessage("RegenHealth");

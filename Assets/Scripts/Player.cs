@@ -1,9 +1,11 @@
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UI;
 using static UnityEditor.Progress;
+using static UnityEngine.RuleTile.TilingRuleOutput;
 
 public class Player : MonoBehaviour
 {
@@ -69,8 +71,12 @@ public class Player : MonoBehaviour
     int targetIndex = 0;
     public List<GameObject> targets = new List<GameObject>(); //Handles all enemies
 
+    Animator animator;
+
     void Awake()
     {
+        animator = GetComponent<Animator>();
+
         currentSkills[0] = dataList.allSkills[0];
         currentSkills[1] = dataList.allSkills[0];
         currentSkills[2] = dataList.allSkills[0];
@@ -99,6 +105,7 @@ public class Player : MonoBehaviour
         expText.text = $"{exp}/{expNeeded}";
         levelText.text = "Level: " + level;
         UpdateStatsInfo();
+        animator.Play("Player_Idle");
     }
 
     void Update()
@@ -120,6 +127,17 @@ public class Player : MonoBehaviour
     {
         //Refrence the current skill in the skill slot
         AttackAction skill = action.GetComponent<AttackAction>();
+
+        StartCoroutine(AttackEnemy(skill));
+    }
+
+    private IEnumerator AttackEnemy(AttackAction skill)
+    {
+        Vector3 originalPos = transform.position;
+        Vector3 pos = new Vector3(currentTarget.transform.position.x - 1, currentTarget.transform.position.y, currentTarget.transform.position.x);
+        transform.position = pos;
+        animator.Play("Player_Attack");
+        yield return new WaitForSeconds(0.35f);
 
         if (skill != null)
         {
@@ -163,6 +181,10 @@ public class Player : MonoBehaviour
                 }
             }
         }
+
+        yield return new WaitForSeconds(0.2f);
+        transform.position = originalPos;
+        animator.Play("Player_Idle");
     }
 
     //Reduces damage of next attack by 50% and heal between 0-10 hp

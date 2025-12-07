@@ -13,7 +13,7 @@ public class TurnManager : MonoBehaviour
     //Coroutine that cycles through alive enemies turns with pauses inbetween then sets the players turn and regens their health
     private IEnumerator EnemyTurn()
     {
-        yield return new WaitForSeconds(0.75f); //Waits 0.75 seconds before enemy turns
+        yield return new WaitForSeconds(1.1f); //Waits 0.75 seconds before enemy turns
 
         //Has enemies deal damage to player in turns with 0.75 second pauses between
         for (int i = 0; i < enemies.Count; i++)
